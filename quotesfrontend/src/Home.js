@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AddQuoteModal from './AddQuoteModal';
 
 const Quotes = () => {
     const [quotes, setQuotes] = useState([{id:'', quote: '', author: ''}]);
+    const [showModal, setShowModal] = useState(false);
 
-
-    console.log("thing things");
     useEffect(() => {categories()}, [])
     const categories = () => {
         axios.get('api/quotes')
@@ -16,11 +16,13 @@ const Quotes = () => {
     }
 
     return (
-        <div>
-            <h1>Some quotes</h1>
-            <ul>{quotes.map(quote => 
+        <div className='App'>
+            <h1>Hey, You're Awesome</h1>
+            {quotes.map(quote => 
                 <li key={quote.id}>{quote.quote} ~{quote.author}</li>
-            )}</ul>
+            )}
+            <button onClick={() => setShowModal(!showModal)}>Button here!</button>
+                {showModal ? <AddQuoteModal setShowModal={setShowModal} /> : null}
         </div>
     );        
 }
