@@ -4,6 +4,7 @@ from django.views import generic
 from .models import Category, Quote
 from rest_framework import viewsets
 from .serializers import QuoteSerializer
+from .authentication import CsrfExemptSessionAuthentication, BasicAuthentication
 # Create your views here.
 
 
@@ -23,6 +24,8 @@ class DetailView(generic.DetailView):
     model = Category
     template_name = 'quotes/detail.html'
     
-class QuoteView(viewsets.ModelViewSet):
+class QuoteViewSet(viewsets.ModelViewSet):
     serializer_class = QuoteSerializer
     queryset = Quote.objects.all()
+    # Temporary solution to prevent csrf checks during API requests
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)

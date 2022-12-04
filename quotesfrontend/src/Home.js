@@ -6,7 +6,7 @@ const Quotes = () => {
     const [quotes, setQuotes] = useState([{id:'', quote: '', author: ''}]);
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {categories()}, [])
+    useEffect(() => {categories()}, [showModal])
     const categories = () => {
         axios.get('api/quotes')
         .then(res => {

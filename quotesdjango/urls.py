@@ -5,7 +5,7 @@ from quotes import views
 
 
 router = routers.DefaultRouter()
-router.register(r'quotes', views.QuoteView, 'quotes')
+router.register(r'quotes', views.QuoteViewSet, 'quotes')
 
 urlpatterns = [
     path('api/', include(router.urls)),

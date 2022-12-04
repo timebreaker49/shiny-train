@@ -1,24 +1,34 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReactDom from "react-dom";
 import {Form, FormGroup, Label, Input, Row, Col, Container, Button} from 'reactstrap';
-import { useForm} from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import css from './AddQuoteModal.css';
+import axios from "axios";
 
 const AddQuoteModal = ({setShowModal}) => {
     const modalRef = useRef();
+    const { handleSubmit, control, formState: { errors } } = useForm();
+
     const closeModal = (e) => {
         if (e.target === modalRef.current) {
             setShowModal(false);
         }
     };
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = data => console.log(data);
+    const onSubmit = data => { 
+        console.log(data); 
+        axios.post('api/quotes/', data)
+        .then(res => {
+            console.log(res);
+            setShowModal(false);
+        })
+        .catch(err => console.log(err));
+    }
     //render the modal JSX in the portal div.
     return ReactDom.createPortal(
         <div className="addQuoteContainer" ref={modalRef} onClick={closeModal}>
             <div className="modal">
                 <Container>
-                    <Form className="form">
+                    <Form className="form" onSubmit={handleSubmit(onSubmit)}>
                         <Row>
                             <FormGroup>
                                 <Col sm={12} className="">
@@ -39,11 +49,14 @@ const AddQuoteModal = ({setShowModal}) => {
                                 Quote
                                 </Label>
                                 <Col sm={10}>                        
-                                    <Input
-                                    id="quote"
-                                    name="quote"
-                                    placeholder="Life is like a box of chocolates"
-                                    type="textarea"
+                                    <Controller
+                                        control={control}
+                                        name="quote"
+                                        render={({ field: { ref, ...fieldProps } }) => (
+                                            <FormGroup>
+                                              <Input id="quote" type="textarea" innerRef={ref} {...fieldProps} />
+                                            </FormGroup>
+                                          )}
                                     />
                                 </Col>
                             </FormGroup>
@@ -54,10 +67,14 @@ const AddQuoteModal = ({setShowModal}) => {
                                 Author
                                 </Label>
                                 <Col sm={10}>                            
-                                    <Input
-                                    id="author"
-                                    name="author"
-                                    placeholder="Charles Dickens"
+                                    <Controller
+                                        control={control}
+                                        name="author"
+                                        render={({ field: { ref, ...fieldProps } }) => (
+                                            <FormGroup>
+                                              <Input id="author" innerRef={ref} {...fieldProps} />
+                                            </FormGroup>
+                                          )}
                                     />
                                 </Col>
                             </FormGroup>
