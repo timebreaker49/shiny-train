@@ -14,32 +14,20 @@
     background: rgba(0, 0, 0, 0.2);
     z-index: 9999;
   }
-  .modal {
-    z-index: 1;
-    width: auto;
-    border-radius: 10px;
-    height: auto;
-    max-width: 60%;
-    min-width: 40%;
-    min-height: auto;
-    max-height: 40%;
-    background: white;
-    display: flex;    
-    justify-content: left;
-    padding: 2%;
-    position: relative;
-    animation: animate 0.3s;
-  }
-
-.deleteButton {
-    background-color: seagreen;
-    padding: 6px 13px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    outline: none;
-    color: white;
-    cursor: pointer;
-  }
+.modal {
+  z-index: 1;
+  width: auto;
+  border-radius: 10px;
+  height: auto;
+  max-width: 60%;
+  min-width: 40%;
+  min-height: auto;
+  max-height: 40%;
+  background: white;
+  display: flex;    
+  justify-content: left;
+  padding: 2%;
+  position: relative;
+  animation: animate 0.3s;
+}
   

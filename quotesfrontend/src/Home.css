@@ -1,0 +1,39 @@
+#quoteRow {
+    text-align: left;
+    padding-left: 5%;
+}
+.newQuoteButton {
+    padding: 13px 29px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    margin-top: 1em;
+    outline: none;
+    background: #724CF9;
+    color: white;
+    cursor: pointer;
+}
+.editButton {
+    background: seagreen;
+    padding: 6px 13px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+}
+.deleteButton {
+    background: #7a7978;
+    padding: 6px 13px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    cursor: pointer;
+}
+
