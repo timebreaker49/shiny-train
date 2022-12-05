@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import AddQuoteModal from './AddQuoteModal';
+import DeleteQuoteModal from './DeleteQuoteModal';
 
 const Quotes = () => {
     const [quotes, setQuotes] = useState([{id:'', quote: '', author: ''}]);
-    const [showModal, setShowModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedQuoteId, setSelectedQuoteId] = useState('');
 
-    useEffect(() => {categories()}, [showModal])
+    useEffect(() => {categories()}, [showAddModal, showDeleteModal])
     const categories = () => {
         axios.get('api/quotes')
         .then(res => {
@@ -19,10 +22,23 @@ const Quotes = () => {
         <div className='App'>
             <h1>Hey, You're Awesome</h1>
             {quotes.map(quote => 
-                <li key={quote.id}>{quote.quote} ~{quote.author}</li>
+                <div key={quote.id}>
+                    <li>{quote.quote} ~{quote.author}</li>
+                    <button className='deleteButton' 
+                        onClick={() => {
+                            setShowDeleteModal(!showDeleteModal);
+                            setSelectedQuoteId(quote.id);
+                        }}>
+                        Delete
+                    </button>
+                        {showDeleteModal ? <DeleteQuoteModal quoteId={selectedQuoteId} setShowDeleteModal={setShowDeleteModal} /> : null}
+                </div>
             )}
-            <button onClick={() => setShowModal(!showModal)}>Button here!</button>
-                {showModal ? <AddQuoteModal setShowModal={setShowModal} /> : null}
+            <button className='newQuoteButton' 
+                onClick={() => setShowAddModal(!showAddModal)}>
+                Add Quote
+            </button>
+                {showAddModal ? <AddQuoteModal setShowAddModal={setShowAddModal} /> : null}
         </div>
     );        
 }

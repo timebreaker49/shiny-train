@@ -5,13 +5,13 @@ import { Controller, useForm } from 'react-hook-form';
 import css from './AddQuoteModal.css';
 import axios from "axios";
 
-const AddQuoteModal = ({setShowModal}) => {
+const AddQuoteModal = ({setShowAddModal}) => {
     const modalRef = useRef();
     const { handleSubmit, control, formState: { errors } } = useForm();
 
     const closeModal = (e) => {
         if (e.target === modalRef.current) {
-            setShowModal(false);
+            setShowAddModal(false);
         }
     };
     const onSubmit = data => { 
@@ -19,7 +19,7 @@ const AddQuoteModal = ({setShowModal}) => {
         axios.post('api/quotes/', data)
         .then(res => {
             console.log(res);
-            setShowModal(false);
+            setShowAddModal(false);
         })
         .catch(err => console.log(err));
     }
@@ -37,7 +37,7 @@ const AddQuoteModal = ({setShowModal}) => {
                                     </h1>                            
                                 </Col>
                                 <Col sm={2}>
-                                    <button onClick={() => setShowModal(false)} className="closeButton">
+                                    <button onClick={() => setShowAddModal(false)} className="closeButton">
                                         X
                                     </button>
                                 </Col>

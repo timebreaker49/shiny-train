@@ -3,12 +3,13 @@
   font-family: sans-serif;
 }
 
-.App button {
+.App .newQuoteButton {
   padding: 13px 29px;
   font-size: 1rem;
   font-weight: bold;
   border-radius: 5px;
   border: none;
+  margin-top: 1em;
   outline: none;
   background: #724CF9;
   color: white;
