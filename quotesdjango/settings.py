@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'taggit',
     'quotes.apps.QuotesConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -114,6 +115,8 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+TAGGIT_CASE_INSENSITIVE = True
 
 
 # Static files (CSS, JavaScript, Images)
