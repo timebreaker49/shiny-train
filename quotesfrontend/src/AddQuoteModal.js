@@ -53,8 +53,6 @@ const AddQuoteModal = ({setShowAddModal}) => {
         name: "tags"
     });
         
-    const inputRef = React.useRef();
-    const selectText = () => { inputRef.current?.select(); }
     //render the modal JSX in the portal div.
     return ReactDom.createPortal(
         <div className="addQuoteContainer" ref={modalRef} onClick={closeModal}>
@@ -106,7 +104,7 @@ const AddQuoteModal = ({setShowAddModal}) => {
                                             <FormGroup>
                                               <Input id="author" innerRef={ref} {...fieldProps} />
                                             </FormGroup>
-                                          )}
+                                        )}
                                     />
                                 </Col>
                             </FormGroup>
@@ -117,13 +115,12 @@ const AddQuoteModal = ({setShowAddModal}) => {
                                     Tags
                                 </Label>
                                 <Col sm={10}>           
-                                    <FormGroup>
                                         <Controller 
                                             control={control}
                                             name="tags"
-                                            render={({ field: { onChange, value, ref, ...fieldProps} }) =>(
-                                                <div className="tags-input">
-                                                    <ul id='tags'>
+                                            render={({ field: { onChange, value, ref, ...fieldProps } }) =>(
+                                                <div className="tags-container">                                                 
+                                                    <ul id="tags">
                                                         {tags.map((tag, index) => (
                                                             <li key={index} className="tag">
                                                                 <span className='tag-title'>{tag}</span>
@@ -136,15 +133,14 @@ const AddQuoteModal = ({setShowAddModal}) => {
                                                         ))}
                                                     </ul>
                                                     <input
+                                                        className="tag-input"
                                                         ref={ref}
                                                         {...fieldProps}
-                                                        type='text' 
-                                                        placeholder="BURN IT ALLLLLL jk it's fine"                                                        
+                                                        type='text'                                                                                                           
                                                     />
                                                 </div>
                                             )}
-                                        />
-                                    </FormGroup>                 
+                                        />            
                                 </Col>
                             </FormGroup>
                         </Row>

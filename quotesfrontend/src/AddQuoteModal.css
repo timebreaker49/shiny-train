@@ -13,7 +13,7 @@
     justify-content: center;
     background: rgba(0, 0, 0, 0.7);
     z-index: 9999;
-  }
+}
 .modal {
   z-index: 1;
   width: auto;
@@ -54,99 +54,32 @@
     transform: scale(1);
   }
 }
-.ReactTags__selected span.ReactTags__tag {
-  border: 1px solid #dee2e6;
-  background: #724CF9;
-  color: white;
-  font-size: 13px;
-  display: inline-block;
-  padding: 5px;
-  margin: 5px 5px;
-  border-radius: 5px;
-}
-.ReactTags__selected .ReactTags__remove {
-  background-color: #34363a;
-  border-radius: 5px;
-  color: white;
-  margin-left: 5px;
-  cursor: pointer;
-}
-.ReactTags__tagInput input.ReactTags__tagInputField {
-  border: 1px solid #dee2e6;
-  margin: 0;
-  font-size: 12px;
-  min-width: 215px;
-  display: block;
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  background-color: #fff;
-  background-clip: padding-box;
-  border-radius: 0.375rem;
-}
-.ReactTags__tagInput input.ReactTags__tagInputField:focus {
-  border: #85b7fe solid 1px;
-  outline: #c7dbff solid 4px;
-  margin: 0;
-  font-size: 12px;
-  min-width: 215px;
-  display: block;
-  width: 100%;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #212529;
-  background-color: #fff;
-  background-clip: padding-box;
-  border-radius: 0.375rem;
-}
-
-* {
-  box-sizing: border-box;
-  /* font-family: "Overpass", sans-serif; */
-}
-
-body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* font-family: "Overpass", sans-serif; */
-}
-
-.tags-input {
+.tags-container {
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
-    min-height: 48px;
+    min-height: 36px;
     width: 100%;
     padding: 0 8px;
     border: 1px solid rgb(214, 216, 218);
     border-radius: 6px;
-  }
-
-.tags-input input, .tags-input :focus-within {
-    border: #85b7fe solid 1px;
-    outline: #c7dbff solid 4px;
-    flex: 1;
-
-    height: 46px;
-    font-size: 14px;
-    padding: 4px 0 0 0;
-
+    vertical-align: baseline;
 }
-
+.tags-container:focus-within {
+  border: #85b7fe solid 1px;
+  outline: #c7dbff solid 4px;
+}
+.tag-input, .tag-input:focus-visible {
+  align-self: center;
+  border: none;  
+  outline: none;
+}
 #tags {
   display: flex;
   flex-wrap: wrap;
   padding: 0;
   margin: 8px 0 0 0;
 }
-
 .tag {
     width: auto;
     height: 32px;
@@ -163,9 +96,8 @@ body {
 }
 .tag-title {
     margin-top: 3px;
-  }
+}
 .tag-close-icon {
-    display: block;
     width: 16px;
     height: 16px;
     line-height: 16px;
