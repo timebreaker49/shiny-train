@@ -10,6 +10,10 @@ const AddQuoteModal = ({setShowAddModal}) => {
     const { handleSubmit, control, formState: { errors } } = useForm();
     
     const [tags, setTags] = React.useState([]);
+    const { fields, append, remove } = useFieldArray({
+        control,
+        name: "tags"
+    });
     
     const closeModal = (e) => {
         if (e.target === modalRef.current) {
@@ -18,7 +22,8 @@ const AddQuoteModal = ({setShowAddModal}) => {
     };
 
     const removeTag = indexToRemove => {
-        setTags([...tags.filter((_, index) => index !== indexToRemove)]);
+        remove(indexToRemove);
+        setTags([...test.filter((_, index) => index !== indexToRemove)]);
     }
 
     useEffect(() => {
@@ -36,7 +41,7 @@ const AddQuoteModal = ({setShowAddModal}) => {
         return () => {
           document.removeEventListener('keydown', keyDownHandler);
         };
-    }, [tags]);
+    }, [tags, append]);
 
     const onSubmit = data => { 
         console.log(data); 
@@ -47,11 +52,6 @@ const AddQuoteModal = ({setShowAddModal}) => {
             // })
             // .catch(err => console.log(err));
     }
-
-    const { fields, append, remove } = useFieldArray({
-        control,
-        name: "tags"
-    });
         
     //render the modal JSX in the portal div.
     return ReactDom.createPortal(
