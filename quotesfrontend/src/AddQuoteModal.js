@@ -96,11 +96,12 @@ const AddQuoteModal = ({setShowAddModal}) => {
                                 </Label>
                                 <Col sm={10}>                            
                                     <Controller
+                                        defaultValue={''}
                                         control={control}
                                         name="author"
                                         render={({ field: { ref, ...fieldProps } }) => (
                                             <FormGroup>
-                                              <Input id="author" innerRef={ref} {...fieldProps} />
+                                              <Input id="author" type="text" innerRef={ref} {...fieldProps} />
                                             </FormGroup>
                                         )}
                                     />
