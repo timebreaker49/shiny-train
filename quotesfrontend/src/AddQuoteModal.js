@@ -1,16 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import ReactDom from "react-dom";
+import { Controller, useForm, useFieldArray } from 'react-hook-form';
 import { Form, FormGroup, Label, Input, Row, Col, Container, Button } from 'reactstrap';
-import { Controller, useForm, useWatch, useFieldArray } from 'react-hook-form';
-import css from "./AddQuoteModal.css";
+import './AddQuoteModal.css';
 import axios from "axios";
 
 const AddQuoteModal = ({setShowAddModal}) => {
     const modalRef = useRef();
-    const { handleSubmit, control, formState: { errors } } = useForm();
-    
+    const { handleSubmit, control } = useForm();
     const [tags, setTags] = React.useState([]);
-    const { fields, append, remove } = useFieldArray({
+    const { append, remove } = useFieldArray({
         control,
         name: "tags"
     });
@@ -23,7 +22,7 @@ const AddQuoteModal = ({setShowAddModal}) => {
 
     const removeTag = indexToRemove => {
         remove(indexToRemove);
-        setTags([...test.filter((_, index) => index !== indexToRemove)]);
+        setTags([...tags.filter((_, index) => index !== indexToRemove)]);
     }
 
     useEffect(() => {
@@ -53,7 +52,6 @@ const AddQuoteModal = ({setShowAddModal}) => {
             // .catch(err => console.log(err));
     }
         
-    //render the modal JSX in the portal div.
     return ReactDom.createPortal(
         <div className="addQuoteContainer" ref={modalRef} onClick={closeModal}>
             <div className="modal">
