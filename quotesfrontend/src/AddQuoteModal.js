@@ -44,12 +44,12 @@ const AddQuoteModal = ({setShowAddModal}) => {
 
     const onSubmit = data => { 
         console.log(data); 
-        // axios.post('api/quotes/', data)
-        // .then(res => {
-            //     console.log(res);
-            //     setShowAddModal(false);
-            // })
-            // .catch(err => console.log(err));
+        axios.post('api/quotes/', data)
+            .then(res => {
+                console.log(res);
+                setShowAddModal(false);
+            })
+            .catch(err => console.log(err));
     }
         
     return ReactDom.createPortal(

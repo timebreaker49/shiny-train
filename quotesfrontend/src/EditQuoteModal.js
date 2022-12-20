@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDom from "react-dom";
 import {Form, FormGroup, Label, Input, Row, Col, Container, Button} from 'reactstrap';
-import { Controller, useForm } from 'react-hook-form';
-import css from './EditQuoteModal.css';
+import { Controller, useForm, useFieldArray } from 'react-hook-form';
+import './EditQuoteModal.css';
 import axios from "axios";
 
 const EditQuoteModal = ({setShowEditModal, quote}) => {
@@ -11,15 +11,22 @@ const EditQuoteModal = ({setShowEditModal, quote}) => {
         defaultValues: {
             id: quote.id,
             author: quote.author,
-            quote: quote.quote
+            quote: quote.quote,
+            tags: quote.tags
         }
+    });
+    const [tags, setTags] = React.useState([]);
+    const { append, remove } = useFieldArray({
+        control,
+        name: "tags"
     });
 
     useEffect(() => {
-        console.log('quote: ' + quote);
+        console.log('quote: ' + quote.tags);
         axios.get(`/api/quotes/${quote.id}`)
             .then(res => {
                 console.log(res.data);
+                setTags(quote.tags);
             })
         .catch(err => console.log(err));
     }, [])
@@ -29,6 +36,28 @@ const EditQuoteModal = ({setShowEditModal, quote}) => {
             setShowEditModal(false);
         }
     };
+
+    const removeTag = indexToRemove => {
+        remove(indexToRemove);
+        setTags([...tags.filter((_, index) => index !== indexToRemove)]);
+    }
+
+    useEffect(() => {
+        const keyDownHandler = event => {
+          if (event.key === 'Enter' && event.target.value !== '') {
+            event.preventDefault();
+            setTags([...tags, event.target.value]);
+            append(event.target.value);
+            event.target.value = '';
+          }
+        };
+    
+        document.addEventListener('keydown', keyDownHandler);
+    
+        return () => {
+          document.removeEventListener('keydown', keyDownHandler);
+        };
+    }, [tags, append]);
     const onSubmit = data => { 
         axios.put(`api/quotes/${quote.id}/`, data)
         .then(res => {
@@ -90,6 +119,41 @@ const EditQuoteModal = ({setShowEditModal, quote}) => {
                                             </FormGroup>
                                           )}
                                     />
+                                </Col>
+                            </FormGroup>
+                        </Row>
+                        <Row>
+                            <FormGroup row>
+                                <Label for="Tags" sm={2}>
+                                    Tags
+                                </Label>
+                                <Col sm={10}>           
+                                        <Controller 
+                                            control={control}
+                                            name="tags"
+                                            render={({ field: { onChange, value, ref, ...fieldProps } }) =>(
+                                                <div className="tags-container">                                                 
+                                                    <ul id="tags">
+                                                        {tags.map((tag, index) => (
+                                                            <li key={index} className="tag">
+                                                                <span className='tag-title'>{tag}</span>
+                                                                <span className="tag-close-icon" 
+                                                                    onClick={() => removeTag(index)}
+                                                                >
+                                                                    x
+                                                                </span>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                    <input
+                                                        className="tag-input"
+                                                        ref={ref}
+                                                        {...fieldProps}
+                                                        type='text'                                                                                                           
+                                                    />
+                                                </div>
+                                            )}
+                                        />            
                                 </Col>
                             </FormGroup>
                         </Row>
