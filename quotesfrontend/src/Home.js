@@ -7,12 +7,12 @@ import EditQuoteModal from './EditQuoteModal';
 import css from './Home.css';
 
 const Quotes = () => {
-    const [quotes, setQuotes] = useState([{id:'', quote: '', author: ''}]);
+    const [quotes, setQuotes] = useState([{id:'', quote: '', author: '', tags: []}]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedQuoteId, setSelectedQuoteId] = useState('');
-    const [selectedQuote, setSelectedQuote] = useState({id:'', quote: '', author: ''});
+    const [selectedQuote, setSelectedQuote] = useState({id:'', quote: '', author: '', tags: []});
 
     useEffect(() => {categories()}, [showAddModal, showDeleteModal, showEditModal]);
     const categories = () => {
@@ -20,7 +20,7 @@ const Quotes = () => {
         .then(res => {
             setQuotes(res.data);
         })
-        .catch(err => console.log(err));
+        .catch(err => console.log(err.response.data));
     }
 
     return (
@@ -49,7 +49,8 @@ const Quotes = () => {
                                     setSelectedQuote({
                                         id: quote.id, 
                                         author: quote.author,
-                                        quote: quote.quote
+                                        quote: quote.quote,
+                                        tags: quote.tags
                                     });
                                 }}> 
                                 Edit
