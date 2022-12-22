@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404
+from django.core import serializers
 from django.http import HttpResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
@@ -6,8 +7,10 @@ from .models import Category, Quote
 from rest_framework import viewsets
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
-from .serializers import QuoteSerializer
+from .serializers import QuoteSerializer, MyTagSerializer
 from .authentication import CsrfExemptSessionAuthentication, BasicAuthentication
+from taggit.models import Tag
+from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 # Create your views here.
 
 
@@ -43,3 +46,9 @@ class QuoteViewSet(viewsets.ModelViewSet):
         quotes = Quote.objects.filter(tags__name__in=params).distinct()
         serializer = QuoteSerializer(quotes, many=True)
         return Response(serializer.data, status=200)
+
+
+class TagViewSet(viewsets.ModelViewSet):
+
+    queryset = Tag.objects.all().order_by('name')
+    serializer_class = MyTagSerializer
