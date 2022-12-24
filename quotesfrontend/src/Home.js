@@ -18,7 +18,7 @@ const Quotes = () => {
     useEffect(() => {
         categories()
     }, [ showAddModal, showDeleteModal, showEditModal ]);
-    
+
     const categories = () => {
         axios.get('api/quotes')
         .then(res => {
@@ -52,52 +52,60 @@ const Quotes = () => {
     return (
         <div className='App'>
             <h1>Hey, You're Awesome</h1>
-            <div>
-                <h3>Categories</h3>
-                {tags.map(tag =>
-                    <div key={tag}>
-                        <a onClick={() => {
-                            tag === "all" ? categories() : getQuotesByTag(tag);
-                        }}>
-                            {tag}
-                        </a>   
-                    </div>)
-                }
-            </div>
-            {quotes.map(quote => 
-                <div key={quote.id} id='quoteRow'>
-                    <Row>
-                        <Row>
-                            <Col sm={8}>
-                                <li>{quote.quote} ~{quote.author} </li>
-                            </Col>
-                            <Col sm={2}>
-                                <button className='deleteButton' 
-                                onClick={() => {
-                                    setShowDeleteModal(!showDeleteModal);
-                                    setSelectedQuoteId(quote.id);
+            <Row>
+                <Col sm={2}>
+                    <div>
+                        <h3>Categories</h3>
+                        {tags.map(tag =>
+                            <div key={tag}>
+                                <a className='tagName' onClick={() => {
+                                    tag === "all" ? categories() : getQuotesByTag(tag);
                                 }}>
-                                Delete
-                                </button>
-                            </Col>
-                            <Col sm={2}>
-                                <button className='editButton'
-                                onClick={() => {
-                                    setShowEditModal(!showEditModal);
-                                    setSelectedQuote({
-                                        id: quote.id, 
-                                        author: quote.author,
-                                        quote: quote.quote,
-                                        tags: quote.tags
-                                    });
-                                }}> 
-                                Edit
-                                </button>
-                            </Col>                                                     
-                        </Row>
+                                    {tag}
+                                </a>   
+                            </div>)
+                        }
+                    </div>
+                </Col>
+                <Col sm={10}>  
+                    <Row>
+                        {quotes.map(quote => 
+                            <div key={quote.id} id='quoteRow'>
+                                <Row>
+                                    <Row>
+                                        <Col sm={8}>
+                                            <li className='quoteAndAuthor'>{quote.quote} ~{quote.author} </li>
+                                            <button className='editButton'
+                                                onClick={() => {
+                                                    setShowEditModal(!showEditModal);
+                                                    setSelectedQuote({
+                                                        id: quote.id, 
+                                                        author: quote.author,
+                                                        quote: quote.quote,
+                                                        tags: quote.tags
+                                                    });
+                                                }}> 
+                                                Edit
+                                            </button>
+                                            <button className='deleteButton' 
+                                                onClick={() => {
+                                                    setShowDeleteModal(!showDeleteModal);
+                                                    setSelectedQuoteId(quote.id);
+                                                }}>
+                                                Delete
+                                            </button>
+                                        </Col>                                                     
+                                    </Row>
+                                </Row>
+                            </div>
+                        )}
                     </Row>
-                </div>
-            )}
+                    <button className='newQuoteButton' 
+                    onClick={() => setShowAddModal(!showAddModal)}>
+                    Add Quote
+                    </button>
+                </Col>
+            </Row>
             {showDeleteModal ? 
                 <DeleteQuoteModal 
                     quoteId={selectedQuoteId} 
@@ -110,10 +118,6 @@ const Quotes = () => {
                     quote={selectedQuote}
                 /> : null
             }        
-            <button className='newQuoteButton' 
-                onClick={() => setShowAddModal(!showAddModal)}>
-                Add Quote
-            </button>
             {showAddModal ? <AddQuoteModal setShowAddModal={setShowAddModal} /> : null}
         </div>
     );        
