@@ -13,8 +13,12 @@ const Quotes = () => {
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedQuoteId, setSelectedQuoteId] = useState('');
     const [selectedQuote, setSelectedQuote] = useState({id:'', quote: '', author: '', tags: []});
+    const [tags, setTags] = useState([]);
 
-    useEffect(() => {categories()}, [showAddModal, showDeleteModal, showEditModal]);
+    useEffect(() => {
+        categories()
+    }, [ showAddModal, showDeleteModal, showEditModal ]);
+    
     const categories = () => {
         axios.get('api/quotes')
         .then(res => {
@@ -23,9 +27,43 @@ const Quotes = () => {
         .catch(err => console.log(err.response.data));
     }
 
+    const getQuotesByTag = (name) => {
+        axios.post('tagged/', {tags: [name]})
+        .then(res => {
+            console.log(JSON.stringify(res.data));
+            setQuotes(res.data);
+        })
+        .catch(err => (err.response.data));
+    }
+    
+    useEffect(() => {
+        axios.get('api/tags')
+        .then(res => {
+            var tagList = [];
+            res.data.map(tag => {
+                tagList.push(tag.name);
+            });
+            setTags(["all", ...tagList]);
+        })
+        .catch(err => console.log(err.response.data));
+    }, []);
+
+
     return (
         <div className='App'>
             <h1>Hey, You're Awesome</h1>
+            <div>
+                <h3>Categories</h3>
+                {tags.map(tag =>
+                    <div key={tag}>
+                        <a onClick={() => {
+                            tag === "all" ? categories() : getQuotesByTag(tag);
+                        }}>
+                            {tag}
+                        </a>   
+                    </div>)
+                }
+            </div>
             {quotes.map(quote => 
                 <div key={quote.id} id='quoteRow'>
                     <Row>
@@ -71,12 +109,12 @@ const Quotes = () => {
                     setShowEditModal={setShowEditModal}
                     quote={selectedQuote}
                 /> : null
-            }
+            }        
             <button className='newQuoteButton' 
                 onClick={() => setShowAddModal(!showAddModal)}>
                 Add Quote
             </button>
-                {showAddModal ? <AddQuoteModal setShowAddModal={setShowAddModal} /> : null}
+            {showAddModal ? <AddQuoteModal setShowAddModal={setShowAddModal} /> : null}
         </div>
     );        
 }

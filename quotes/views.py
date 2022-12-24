@@ -39,7 +39,7 @@ class QuoteViewSet(viewsets.ModelViewSet):
     # Temporary solution to prevent csrf checks during API requests
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
-    @api_view(['GET'])
+    @api_view(['POST'])
     @csrf_exempt
     def filter_for_tags(request):
         params = request.data['tags']
@@ -49,6 +49,5 @@ class QuoteViewSet(viewsets.ModelViewSet):
 
 
 class TagViewSet(viewsets.ModelViewSet):
-
     queryset = Tag.objects.all().order_by('name')
     serializer_class = MyTagSerializer
