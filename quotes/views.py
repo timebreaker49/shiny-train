@@ -11,6 +11,8 @@ from .serializers import QuoteSerializer, MyTagSerializer
 from .authentication import CsrfExemptSessionAuthentication, BasicAuthentication
 from taggit.models import Tag
 from taggit.serializers import (TagListSerializerField, TaggitSerializer)
+
+
 # Create your views here.
 
 
@@ -22,7 +24,7 @@ def add_to_category(request, quote_id):
 class IndexView(generic.ListView):
     template_name = 'quotes/index.html'
     context_object_name = 'categories'
-    
+
     def get_queryset(self):
         """Return 5 categories in alphabetical order"""
         return Category.objects.order_by('-name')[:5]
@@ -49,5 +51,5 @@ class QuoteViewSet(viewsets.ModelViewSet):
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.all().order_by('name')
+    queryset = Tag.objects.exclude(quote=None).order_by('name')
     serializer_class = MyTagSerializer
