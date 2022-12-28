@@ -6,6 +6,7 @@ from quotes import views
 
 router = routers.DefaultRouter()
 router.register(r'quotes', views.QuoteViewSet, 'quotes')
+router.register(r'tags', views.TagViewSet, 'tags')
 
 
 urlpatterns = [
