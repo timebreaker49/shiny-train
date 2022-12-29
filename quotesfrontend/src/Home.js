@@ -69,11 +69,14 @@ const Quotes = () => {
                         <h3>Categories</h3>
                         {tags.map(tag =>
                             <div key={tag}>
-                                <a className='tagName' onClick={() => {
+                                <button 
+                                    className='tagName' 
+                                    onClick={() => {
                                     setSelectedTag(tag);
-                                }}>
+                                    }}
+                                >
                                     {tag}
-                                </a>   
+                                </button>   
                             </div>)
                         }
                     </div>
