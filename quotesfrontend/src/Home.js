@@ -4,7 +4,7 @@ import axios from 'axios';
 import AddQuoteModal from './AddQuoteModal';
 import DeleteQuoteModal from './DeleteQuoteModal';
 import EditQuoteModal from './EditQuoteModal';
-import css from './Home.css';
+import './Home.css';
 
 const Quotes = () => {
     const [quotes, setQuotes] = useState([{id:'', quote: '', author: '', tags: []}]);
@@ -51,9 +51,9 @@ const Quotes = () => {
         axios.get('api/tags')
         .then(res => {
             var tagList = [];
-            res.data.map(tag => {
-                tagList.push(tag.name);
-            });
+            res.data.map(tag => 
+                tagList.push(tag.name)
+            );
             setTags(["all", ...tagList]);
         })
         .catch(err => console.log(err.response.data));
