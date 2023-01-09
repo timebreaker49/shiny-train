@@ -3,7 +3,7 @@
     padding-left: 5%;
 }
 .newQuoteButton {
-    display: block;
+    display: initial;
     padding: 6px 13px;
     font-size: 1rem;
     font-weight: bold;

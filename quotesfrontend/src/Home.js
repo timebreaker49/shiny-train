@@ -72,14 +72,20 @@ const Quotes = () => {
                                 <button 
                                     className='tagName' 
                                     onClick={() => {
-                                    setSelectedTag(tag);
+                                        setSelectedTag(tag);
                                     }}
                                 >
                                     {tag}
                                 </button>   
                             </div>)
-                        }
+                        }                        
                     </div>
+                    <button className='newQuoteButton' 
+                        onClick={() => {
+                            setShowAddModal(!showAddModal)
+                        }}>
+                        Add Quote
+                    </button>
                 </Col>
                 <Col sm={10}>  
                     <Row>
@@ -114,12 +120,6 @@ const Quotes = () => {
                             </div>
                         )}
                     </Row>
-                    <button className='newQuoteButton' 
-                        onClick={() => {
-                            setShowAddModal(!showAddModal)
-                        }}>
-                        Add Quote
-                    </button>
                 </Col>
             </Row>
             {showDeleteModal ? 
