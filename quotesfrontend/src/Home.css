@@ -16,6 +16,20 @@
     color: white;
     cursor: pointer;
 }
+.deleteMultipleButton {
+    display: initial;
+    padding: 6px 13px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    margin-top: 1em;
+    margin-left: 4%;
+    outline: none;
+    background: #7a7978;
+    color: white;
+    cursor: pointer;
+}
 .editButton {
     background: seagreen;
     padding: 6px 13px;

@@ -15,6 +15,10 @@ const Quotes = () => {
     const [selectedQuote, setSelectedQuote] = useState({id:'', quote: '', author: '', tags: []});
     const [selectedTag, setSelectedTag] = useState('');
     const [tags, setTags] = useState([]);
+    const [deleteMultiple, setDeleteMultiple] = useState(false); 
+    const [checkedState, setCheckedState] = useState(
+        new Array(quotes.length).fill(false)
+    );
 
     useEffect(() => {
         getTags()
@@ -59,6 +63,13 @@ const Quotes = () => {
         .catch(err => console.log(err.response.data));
     }
 
+    const handleOnChange = position => {
+        const updateCheckedState = checkedState.map((item, index) => 
+            index === position ? !item : item
+        );
+        setCheckedState(updateCheckedState);
+    }
+
 
     return (
         <div className='App'>
@@ -80,29 +91,54 @@ const Quotes = () => {
                             </div>)
                         }                        
                     </div>
-                    <button className='newQuoteButton' 
-                        onClick={() => {
-                            setShowAddModal(!showAddModal)
-                        }}>
-                        Add Quote
-                    </button>
+                    <Row>
+                        <div>
+                            <button className='newQuoteButton' 
+                                onClick={() => {
+                                    setShowAddModal(!showAddModal)
+                                }}>
+                                Add Quote
+                            </button>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div>
+                            <button className='deleteMultipleButton' 
+                                onClick={() => {
+                                    setDeleteMultiple(!deleteMultiple);
+                                    console.log('Delete clicked!!')
+                                }}>
+                                Delete Quote(s)
+                            </button>
+                        </div>
+                    </Row>
+
                 </Col>
                 <Col sm={10}>  
                     <Row>
-                        {quotes.map(quote => 
-                            <div key={quote.id} id='quoteRow'>
+                        {quotes.map(({id, author, quote, tags}, index) => 
+                            <div key={id} id='quoteRow'>
                                 <Row>
                                     <Row>
                                         <Col sm={8}>
-                                            <li className='quoteAndAuthor'>{quote.quote} ~{quote.author} </li>
+                                            <li className='quoteAndAuthor'>{index} - {quote} ~{author}</li>
+                                            {deleteMultiple ? 
+                                                <input 
+                                                    type='checkbox' 
+                                                    checked={checkedState} 
+                                                    onChange={() => handleOnChange(index)}
+                                                    value={id}
+                                                    checked={checkedState[index]} 
+                                                /> : null
+                                            }                                            
                                             <button className='editButton'
                                                 onClick={() => {
                                                     setShowEditModal(!showEditModal);
                                                     setSelectedQuote({
-                                                        id: quote.id, 
-                                                        author: quote.author,
-                                                        quote: quote.quote,
-                                                        tags: quote.tags
+                                                        id: id, 
+                                                        author: author,
+                                                        quote: quote,
+                                                        tags: tags
                                                     });
                                                 }}> 
                                                 Edit
@@ -110,7 +146,7 @@ const Quotes = () => {
                                             <button className='deleteButton' 
                                                 onClick={() => {
                                                     setShowDeleteModal(!showDeleteModal);
-                                                    setSelectedQuoteId(quote.id);
+                                                    setSelectedQuoteId(id);
                                                 }}>
                                                 Delete
                                             </button>
