@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import css from './DeleteQuoteModal.css';
 import axios from "axios";
 
-const DeleteQuoteModal = ({setShowDeleteModal, quoteId}) => {
+const DeleteQuoteModal = ({setShowDeleteModal, toBeDeleted}) => {
     const modalRef = useRef();
     const { handleSubmit, control, formState: { errors } } = useForm();
 
@@ -15,12 +15,14 @@ const DeleteQuoteModal = ({setShowDeleteModal, quoteId}) => {
         }
     };
     const onSubmit = () => { 
-        axios.delete('api/quotes/' + quoteId)
-        .then(res => {
-            console.log(res);
-            setShowDeleteModal(false);
-        })
-        .catch(err => console.log(err));
+        console.log('temporarily disabling delete for now while multi-select is implemented!!');
+        console.log('ids to be deleted: ', toBeDeleted);
+        // axios.delete('api/quotes/' + quoteId)
+        // .then(res => {
+        //     console.log(res);
+        //     setShowDeleteModal(false);
+        // })
+        // .catch(err => console.log(err));
     }
     //render the modal JSX in the portal div.
     return ReactDom.createPortal(

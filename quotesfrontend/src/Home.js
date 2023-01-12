@@ -11,19 +11,25 @@ const Quotes = () => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedQuoteId, setSelectedQuoteId] = useState('');
     const [selectedQuote, setSelectedQuote] = useState({id:'', quote: '', author: '', tags: []});
     const [selectedTag, setSelectedTag] = useState('');
     const [tags, setTags] = useState([]);
     const [deleteMultiple, setDeleteMultiple] = useState(false); 
-    const [checkedState, setCheckedState] = useState(
-        new Array(quotes.length).fill(false)
-    );
+    const [checkedState, setCheckedState] = useState([]);
+    const [toBeDeleted, setToBeDeleted] = useState([]);
 
     useEffect(() => {
         getTags()
         getQuotes();
     }, [ showAddModal, showDeleteModal, showEditModal, selectedTag ]);
+
+    useEffect(() => {
+        if (deleteMultiple) {
+            if (checkedState.length === 0) {
+                setCheckedState(new Array(quotes.length).fill(false));
+            }
+        }
+    },[ deleteMultiple, checkedState.length, quotes.length ]);
 
 
     const getQuotes = () => {
@@ -70,6 +76,15 @@ const Quotes = () => {
         setCheckedState(updateCheckedState);
     }
 
+    const deleteSelected = () => {
+        let idArray = [];
+        checkedState.forEach((element, index) => {
+            if (element === true) {
+                idArray.push(quotes[index].id);
+            }
+        });
+        setToBeDeleted(idArray);
+    }
 
     return (
         <div className='App'>
@@ -112,9 +127,19 @@ const Quotes = () => {
                             </button>
                         </div>
                     </Row>
-
                 </Col>
                 <Col sm={10}>  
+                    <Row>
+                        <div>
+                            <button className='deleteButton' 
+                                onClick={() => {
+                                    deleteSelected();
+                                    setShowDeleteModal(!showDeleteModal);                               
+                                }}>
+                                Delete Selected
+                            </button>
+                        </div>
+                    </Row>
                     <Row>
                         {quotes.map(({id, author, quote, tags}, index) => 
                             <div key={id} id='quoteRow'>
@@ -128,7 +153,7 @@ const Quotes = () => {
                                                     checked={checkedState} 
                                                     onChange={() => handleOnChange(index)}
                                                     value={id}
-                                                    checked={checkedState[index]} 
+                                                    checked={checkedState[index] ?? []} 
                                                 /> : null
                                             }                                            
                                             <button className='editButton'
@@ -143,13 +168,6 @@ const Quotes = () => {
                                                 }}> 
                                                 Edit
                                             </button>
-                                            <button className='deleteButton' 
-                                                onClick={() => {
-                                                    setShowDeleteModal(!showDeleteModal);
-                                                    setSelectedQuoteId(id);
-                                                }}>
-                                                Delete
-                                            </button>
                                         </Col>                                                     
                                     </Row>
                                 </Row>
@@ -160,7 +178,7 @@ const Quotes = () => {
             </Row>
             {showDeleteModal ? 
                 <DeleteQuoteModal 
-                    quoteId={selectedQuoteId} 
+                    toBeDeleted={toBeDeleted}
                     setShowDeleteModal={setShowDeleteModal}
                 /> : null
             }
