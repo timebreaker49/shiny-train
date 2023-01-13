@@ -49,6 +49,13 @@ class QuoteViewSet(viewsets.ModelViewSet):
         serializer = QuoteSerializer(quotes, many=True)
         return Response(serializer.data, status=200)
 
+    @api_view(['DELETE'])
+    @csrf_exempt
+    def bulk_delete(request):
+        params = request.data['delete_ids']
+        Quote.objects.filter(id__in=params).delete()
+        return Response(status=204)
+
 
 class TagViewSet(viewsets.ModelViewSet):
     queryset = Tag.objects.exclude(quote=None).order_by('name')

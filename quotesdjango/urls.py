@@ -13,5 +13,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('quotes/', include('quotes.urls')),
     path('tagged/', views.QuoteViewSet.filter_for_tags, name='tagged'),
+    path('bulk-delete/', views.QuoteViewSet.bulk_delete, name='bulk-delete'),
     path('admin/', admin.site.urls),
 ]
