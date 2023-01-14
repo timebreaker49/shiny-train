@@ -14,15 +14,14 @@ const DeleteQuoteModal = ({setShowDeleteModal, toBeDeleted}) => {
             setShowDeleteModal(false);
         }
     };
-    const onSubmit = () => { 
-        console.log('temporarily disabling delete for now while multi-select is implemented!!');
-        console.log('ids to be deleted: ', toBeDeleted);
-        // axios.delete('api/quotes/' + quoteId)
-        // .then(res => {
-        //     console.log(res);
-        //     setShowDeleteModal(false);
-        // })
-        // .catch(err => console.log(err));
+
+    const onSubmit = () => {
+        axios.delete('bulk-delete/', { data: { delete_ids: toBeDeleted } })
+            .then(res => {
+                console.log(res);
+                setShowDeleteModal(false);
+            })
+            .catch(err => console.log(err.response.data));
     }
     //render the modal JSX in the portal div.
     return ReactDom.createPortal(

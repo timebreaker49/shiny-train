@@ -84,6 +84,7 @@ const Quotes = () => {
             }
         });
         setToBeDeleted(idArray);
+        setShowDeleteModal(!showDeleteModal);
     }
 
     return (
@@ -133,8 +134,7 @@ const Quotes = () => {
                         <div>
                             <button className='deleteButton' 
                                 onClick={() => {
-                                    deleteSelected();
-                                    setShowDeleteModal(!showDeleteModal);                               
+                                    deleteSelected();                               
                                 }}>
                                 Delete Selected
                             </button>
