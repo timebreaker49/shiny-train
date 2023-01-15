@@ -77,14 +77,16 @@ const Quotes = () => {
     }
 
     const deleteSelected = () => {
-        let idArray = [];
-        checkedState.forEach((element, index) => {
-            if (element === true) {
-                idArray.push(quotes[index].id);
-            }
-        });
-        setToBeDeleted(idArray);
-        setShowDeleteModal(!showDeleteModal);
+        if (checkedState.indexOf(true) !== -1) {
+            let idArray = [];
+            checkedState.forEach((element, index) => {
+                if (element === true) {
+                    idArray.push(quotes[index].id);
+                }
+            });
+            setToBeDeleted(idArray);
+            setShowDeleteModal(!showDeleteModal);
+        }
     }
 
     return (
@@ -130,16 +132,20 @@ const Quotes = () => {
                     </Row>
                 </Col>
                 <Col sm={10}>  
-                    <Row>
-                        <div>
-                            <button className='deleteButton' 
-                                onClick={() => {
-                                    deleteSelected();                               
-                                }}>
-                                Delete Selected
-                            </button>
-                        </div>
-                    </Row>
+                    {deleteMultiple ? 
+                        <Row>
+                            <div>
+                                <button 
+                                    className='deleteButton'
+                                    onClick={() => {
+                                        deleteSelected();                               
+                                    }}>
+                                    Delete Selected
+                                </button>
+                            </div>
+                        </Row>                    
+                        : null
+                    }
                     <Row>
                         {quotes.map(({id, author, quote, tags}, index) => 
                             <div key={id} id='quoteRow'>
