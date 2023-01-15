@@ -152,16 +152,18 @@ const Quotes = () => {
                                 <Row>
                                     <Row>
                                         <Col sm={8}>
-                                            <li className='quoteAndAuthor'>{index} - {quote} ~{author}</li>
-                                            {deleteMultiple ? 
-                                                <input 
-                                                    type='checkbox' 
-                                                    checked={checkedState} 
-                                                    onChange={() => handleOnChange(index)}
-                                                    value={id}
-                                                    checked={checkedState[index] ?? []} 
-                                                /> : null
-                                            }                                            
+                                            <span className='checkAndQuote'>
+                                                {deleteMultiple ? 
+                                                    <input 
+                                                        className='deleteCheckbox'
+                                                        type='checkbox' 
+                                                        onChange={() => handleOnChange(index)}
+                                                        value={id}
+                                                        checked={checkedState[index] ?? []} 
+                                                    /> : null
+                                                }  
+                                                <li className='quoteAndAuthor'>{quote} ~{author}</li>
+                                            </span>
                                             <button className='editButton'
                                                 onClick={() => {
                                                     setShowEditModal(!showEditModal);
