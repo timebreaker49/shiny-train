@@ -17,6 +17,9 @@ const Quotes = () => {
     const [deleteMultiple, setDeleteMultiple] = useState(false); 
     const [checkedState, setCheckedState] = useState([]);
     const [toBeDeleted, setToBeDeleted] = useState([]);
+    const [toggleEdit, setToggleEdit] = useState(false);
+    const [editRadio, setEditRadio] = useState([]);
+
 
     useEffect(() => {
         getTags()
@@ -30,6 +33,12 @@ const Quotes = () => {
             }
         }
     },[ deleteMultiple, checkedState.length, quotes.length ]);
+
+    useEffect(() => {
+        if (toggleEdit) {
+            setEditRadio(new Array(quotes.length).fill(false));
+        }
+    }, [toggleEdit, quotes.length]);
 
 
     const getQuotes = () => {
@@ -89,6 +98,18 @@ const Quotes = () => {
         }
     }
 
+    const editOnChange = id => {
+        let selected = quotes.find(quote => quote.id === id);
+        setSelectedQuote(selected);
+    }
+
+    const handleToggleEdit = () => {
+        setToggleEdit(!toggleEdit);
+        if (toggleEdit === false) {
+            setSelectedQuote({id:'', quote: '', author: '', tags: []});
+        }
+    }
+
     return (
         <div className='App'>
             <h1>Hey, You're Awesome</h1>
@@ -121,10 +142,17 @@ const Quotes = () => {
                     </Row>
                     <Row>
                         <div>
+                            <button className='toggleEditButton'
+                                onClick={() => handleToggleEdit()}> 
+                                Edit Quote
+                            </button>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div>
                             <button className='deleteMultipleButton' 
                                 onClick={() => {
                                     setDeleteMultiple(!deleteMultiple);
-                                    console.log('Delete clicked!!')
                                 }}>
                                 Delete Quote(s)
                             </button>
@@ -140,10 +168,26 @@ const Quotes = () => {
                                     onClick={() => {
                                         deleteSelected();                               
                                     }}>
-                                    Delete Selected
+                                    Bulk Delete
                                 </button>
                             </div>
                         </Row>                    
+                        : null
+                    }
+                    {toggleEdit ?
+                        <Row>
+                            <div>
+                                <button
+                                    className='editButton'
+                                    onClick={() => {
+                                        if (selectedQuote.id !== '') {
+                                            setShowEditModal(!showEditModal);
+                                        }
+                                    }} >
+                                    Edit Quote
+                                </button>
+                            </div>
+                        </Row>
                         : null
                     }
                     <Row>
@@ -161,21 +205,18 @@ const Quotes = () => {
                                                         value={id}
                                                         checked={checkedState[index] ?? []} 
                                                     /> : null
+                                                }
+                                                {toggleEdit ? 
+                                                    <input 
+                                                        className='editRadioButton'
+                                                        type='radio' 
+                                                        name='editRadioButton'
+                                                        onChange={() => editOnChange(id)}
+                                                        value={id}
+                                                    /> : null
                                                 }  
-                                                <li className='quoteAndAuthor'>{quote} ~{author}</li>
+                                                <li className='quoteAndAuthor'>{index+1}. {quote} ~{author}</li>
                                             </span>
-                                            <button className='editButton'
-                                                onClick={() => {
-                                                    setShowEditModal(!showEditModal);
-                                                    setSelectedQuote({
-                                                        id: id, 
-                                                        author: author,
-                                                        quote: quote,
-                                                        tags: tags
-                                                    });
-                                                }}> 
-                                                Edit
-                                            </button>
                                         </Col>                                                     
                                     </Row>
                                 </Row>

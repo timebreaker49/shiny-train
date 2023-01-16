@@ -30,8 +30,23 @@
     color: white;
     cursor: pointer;
 }
+.toggleEditButton {
+    display: initial;
+    padding: 6px 13px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    margin-top: 1em;
+    margin-left: 4%;
+    outline: none;
+    background: seagreen;
+    color: white;
+    cursor: pointer;
+}
 .editButton {
     background: seagreen;
+    display: flex;
     padding: 6px 13px;
     font-size: 1rem;
     font-weight: bold;
@@ -40,7 +55,7 @@
     outline: none;
     color: white;
     cursor: pointer;
-    margin: 1%;
+    margin: 0 4%;
 }
 .checkAndQuote {
     display: flex;
