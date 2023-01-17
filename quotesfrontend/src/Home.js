@@ -4,6 +4,8 @@ import axios from 'axios';
 import AddQuoteModal from './AddQuoteModal';
 import DeleteQuoteModal from './DeleteQuoteModal';
 import EditQuoteModal from './EditQuoteModal';
+import Card from 'react-bootstrap/Card';
+import imgSrc from './ImageSrcs';
 import './Home.css';
 
 const Quotes = () => {
@@ -192,35 +194,36 @@ const Quotes = () => {
                     }
                     <Row>
                         {quotes.map(({id, author, quote, tags}, index) => 
-                            <div key={id} id='quoteRow'>
-                                <Row>
-                                    <Row>
-                                        <Col sm={8}>
-                                            <span className='checkAndQuote'>
-                                                {deleteMultiple ? 
-                                                    <input 
-                                                        className='deleteCheckbox'
-                                                        type='checkbox' 
-                                                        onChange={() => handleOnChange(index)}
-                                                        value={id}
-                                                        checked={checkedState[index] ?? []} 
-                                                    /> : null
-                                                }
-                                                {toggleEdit ? 
-                                                    <input 
-                                                        className='editRadioButton'
-                                                        type='radio' 
-                                                        name='editRadioButton'
-                                                        onChange={() => editOnChange(id)}
-                                                        value={id}
-                                                    /> : null
-                                                }  
-                                                <li className='quoteAndAuthor'>{index+1}. {quote} ~{author}</li>
-                                            </span>
-                                        </Col>                                                     
-                                    </Row>
-                                </Row>
-                            </div>
+                            <Col xs={6} lg={4} key={id} id='quoteRow'>
+                                <span className='checkAndQuote'>
+                                    {deleteMultiple ? 
+                                        <input 
+                                            className='deleteCheckbox'
+                                            type='checkbox' 
+                                            onChange={() => handleOnChange(index)}
+                                            value={id}
+                                            checked={checkedState[index] ?? []} 
+                                        /> : null
+                                    }
+                                    {toggleEdit ? 
+                                        <input 
+                                            className='editRadioButton'
+                                            type='radio' 
+                                            name='editRadioButton'
+                                            onChange={() => editOnChange(id)}
+                                            value={id}
+                                        /> : null
+                                    }  
+                                    {/* <li className='quoteAndAuthor'>{index+1}. {quote} ~{author}</li> */}
+                                    <Card style={{ width: '24rem' }}>
+                                        <Card.Img variant="top" src={imgSrc[Math.floor(Math.random() * imgSrc.length)]} />
+                                        <Card.Body>
+                                            <Card.Title>{index+1}. "{quote}"</Card.Title>
+                                            <Card.Text>~ {author}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </span>
+                            </Col>                                                     
                         )}
                     </Row>
                 </Col>
