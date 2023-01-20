@@ -21,12 +21,25 @@ const Quotes = () => {
     const [toBeDeleted, setToBeDeleted] = useState([]);
     const [toggleEdit, setToggleEdit] = useState(false);
     const [editRadio, setEditRadio] = useState([]);
-
-
+    const [mapped, setMapped] = useState({});
+    
     useEffect(() => {
         getTags()
         getQuotes();
     }, [ showAddModal, showDeleteModal, showEditModal, selectedTag ]);
+    
+    useEffect(() => {
+        if (Object.keys(mapped).length === 0) {
+            if (quotes.length > 0) {
+                let quoteToImgMap = {};
+                for (let q in quotes) {
+                    let idx = Math.floor(Math.random() * imgSrc.length);
+                    quoteToImgMap = {...quoteToImgMap, ...{[quotes[q].id]:idx}};
+                }
+                setMapped(quoteToImgMap);
+            }
+        }
+    }, [quotes, mapped]);
 
     useEffect(() => {
         if (deleteMultiple) {
@@ -216,7 +229,7 @@ const Quotes = () => {
                                     }  
                                     {/* <li className='quoteAndAuthor'>{index+1}. {quote} ~{author}</li> */}
                                     <Card style={{ width: '24rem' }}>
-                                        <Card.Img variant="top" src={imgSrc[Math.floor(Math.random() * imgSrc.length)]} />
+                                        <Card.Img variant="top" src={imgSrc[mapped[id]]} />
                                         <Card.Body>
                                             <Card.Title>{index+1}. "{quote}"</Card.Title>
                                             <Card.Text>~ {author}</Card.Text>
