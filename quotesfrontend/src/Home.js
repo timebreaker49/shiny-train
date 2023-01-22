@@ -9,13 +9,13 @@ import imgSrc from './ImageSrcs';
 import './Home.css';
 
 const Quotes = () => {
-    const [quotes, setQuotes] = useState([{id:'', quote: '', author: '', tags: []}]);
+    const [tags, setTags] = useState([]);
+    const [quotes, setQuotes] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
-    const [selectedQuote, setSelectedQuote] = useState({id:'', quote: '', author: '', tags: []});
+    const [selectedQuote, setSelectedQuote] = useState();
     const [selectedTag, setSelectedTag] = useState('');
-    const [tags, setTags] = useState([]);
     const [deleteMultiple, setDeleteMultiple] = useState(false); 
     const [checkedState, setCheckedState] = useState([]);
     const [toBeDeleted, setToBeDeleted] = useState([]);
@@ -119,6 +119,7 @@ const Quotes = () => {
     }
 
     const handleToggleEdit = () => {
+        if (deleteMultiple) setDeleteMultiple(false);
         setToggleEdit(!toggleEdit);
         if (toggleEdit === false) {
             setSelectedQuote({id:'', quote: '', author: '', tags: []});
@@ -167,6 +168,7 @@ const Quotes = () => {
                         <div>
                             <button className='deleteMultipleButton' 
                                 onClick={() => {
+                                    if (toggleEdit) setToggleEdit(false);
                                     setDeleteMultiple(!deleteMultiple);
                                 }}>
                                 Delete Quote(s)
