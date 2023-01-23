@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Row } from 'reactstrap';
+import { Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import axios from 'axios';
 import AddQuoteModal from './AddQuoteModal';
 import DeleteQuoteModal from './DeleteQuoteModal';
@@ -22,6 +22,8 @@ const Quotes = () => {
     const [toggleEdit, setToggleEdit] = useState(false);
     const [editRadio, setEditRadio] = useState([]);
     const [mapped, setMapped] = useState({});
+    const [sort, setSort] = useState('');
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     
     useEffect(() => {
         getTags()
@@ -126,6 +128,23 @@ const Quotes = () => {
         }
     }
 
+    const handleDropdownChange = e => {
+        setSort(e.target.value);
+        const sortedQuotes = quotes;
+        switch(e.target.value) {
+            case 'Name ↓':
+                sortedQuotes.sort((a,b) => a.author.localeCompare(b.author));
+                break;
+            case 'Name ↑':
+                sortedQuotes.sort((a,b) => b.author.localeCompare(a.author));
+                break;
+            default:
+                return null;
+        }
+        setQuotes(sortedQuotes);
+    }
+    
+
     return (
         <div className='App'>
             <h1>Hey, You're Awesome</h1>
@@ -174,6 +193,32 @@ const Quotes = () => {
                                 Delete Quote(s)
                             </button>
                         </div>
+                    </Row>
+                    <Row>
+                        <Dropdown 
+                            direction="down" 
+                            isOpen={dropdownOpen} 
+                            toggle={() => setDropdownOpen(!dropdownOpen)} >
+                            <DropdownToggle 
+                                caret 
+                                className='sortDropdownText'>
+                                    {sort === '' ? 'Sort' : `Sort by: ${sort}`}
+                            </DropdownToggle>
+                            <DropdownMenu name="sortType">
+                                <DropdownItem 
+                                    name="NameDesc" 
+                                    value="Name ↓" 
+                                    onClick={e => handleDropdownChange(e)}>
+                                        Name ↓
+                                </DropdownItem>
+                                <DropdownItem 
+                                    name="NameAsc" 
+                                    value="Name ↑" 
+                                    onClick={e => handleDropdownChange(e)}>
+                                        Name ↑
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
                     </Row>
                 </Col>
                 <Col sm={10}>  
