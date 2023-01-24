@@ -30,18 +30,36 @@ const Quotes = () => {
         getQuotes();
     }, [ showAddModal, showDeleteModal, showEditModal, selectedTag ]);
     
+    // mapping random image to quote id
     useEffect(() => {
         if (Object.keys(mapped).length === 0) {
             if (quotes.length > 0) {
                 let quoteToImgMap = {};
-                for (let q in quotes) {
-                    let idx = Math.floor(Math.random() * imgSrc.length);
-                    quoteToImgMap = {...quoteToImgMap, ...{[quotes[q].id]:idx}};
+                // shuffling image sources
+                let shuffled = shuffleArray([...imgSrc]);
+                let counter = 0;
+                for (let quote in quotes) {
+                    // resetting shuffled array to map over if multiple of length
+                    // getting index of shuffled val from src array
+                    // mapping quote.id : randomized idx
+                    if (quote % imgSrc.length === 0 && quote > 0) {
+                        shuffled = shuffleArray([...imgSrc]);
+                        counter = 0;
+                    }
+                    let srcIdx = imgSrc.indexOf(shuffled[counter++]);
+                    quoteToImgMap = {...quoteToImgMap, ...{ [quotes[quote].id]: srcIdx }};
                 }
                 setMapped(quoteToImgMap);
             }
         }
     }, [quotes, mapped]);
+
+    const shuffleArray = input => {
+        return input
+            .map(value => ({ value, sort: Math.random()}))
+            .sort((a,b) => a.sort - b.sort)
+            .map(({value}) => value)
+    }
 
     useEffect(() => {
         if (deleteMultiple) {
