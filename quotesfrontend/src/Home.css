@@ -1,6 +1,6 @@
 #quoteRow {
     text-align: left;
-    padding-left: 5%;
+    padding-bottom: 1em;
 }
 .newQuoteButton {
     display: initial;
@@ -58,7 +58,8 @@
     margin: 0 4%;
 }
 .checkAndQuote {
-    display: flex;
+    display: table;
+    margin: auto 2em;
 }
 .deleteCheckbox {
     display: flex;
@@ -90,4 +91,12 @@
     font-family: Arial, Helvetica, sans-serif;
     list-style: none;
     margin-left: 1%;
+}
+.dropdown {
+    margin-top: 1em;
+    margin-left: 4%;
+    padding: 6px 13px;
+}
+.sortDropdownText {
+    font-weight: bold;
 }
