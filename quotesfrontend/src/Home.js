@@ -264,7 +264,7 @@ const Quotes = () => {
                                             setShowEditModal(!showEditModal);
                                         }
                                     }} >
-                                    Edit Quote
+                                    Edit Selection
                                 </button>
                             </div>
                         </Row>

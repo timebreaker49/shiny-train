@@ -3,8 +3,8 @@ from django.db import models
 import os
 import django
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quotesdjango.settings')
-django.setup()
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'quotesdjango.settings')
+# django.setup()
 
 from taggit.managers import TaggableManager
 

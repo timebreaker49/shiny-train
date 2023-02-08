@@ -33,7 +33,7 @@ const DeleteQuoteModal = ({setShowDeleteModal, toBeDeleted}) => {
                             <FormGroup>
                                 <Col sm={12} className="">
                                     <h1>
-                                        Delete Quote
+                                        Delete Quote(s)
                                     </h1>                            
                                 </Col>
                                 <Col sm={2}>
@@ -47,7 +47,7 @@ const DeleteQuoteModal = ({setShowDeleteModal, toBeDeleted}) => {
                             <FormGroup row>
                                 <Label for="Quote" sm={10}>
                                     <p>
-                                        Are you sure you want to delete this quote?
+                                        Are you sure you want to delete these quotes?
                                     </p>                            
                                 </Label>
                             </FormGroup>
