@@ -280,22 +280,26 @@ const Quotes = () => {
                             <Col xs={6} lg={4} key={id} id='quoteRow'>
                                 <span className='checkAndQuote'>
                                     {deleteMultiple ? 
-                                        <input 
-                                            className='deleteCheckbox'
-                                            type='checkbox' 
-                                            onChange={() => handleOnChange(index)}
-                                            value={id}
-                                            checked={checkedState[index] ?? []} 
-                                        /> : null
+                                        <span className='deleteCheckboxSpan'>
+                                            <input 
+                                                className='deleteCheckbox'
+                                                type='checkbox' 
+                                                onChange={() => handleOnChange(index)}
+                                                value={id}
+                                                checked={checkedState[index] ?? []} 
+                                            />
+                                        </span> : null
                                     }
                                     {toggleEdit ? 
-                                        <input 
-                                            className='editRadioButton'
-                                            type='radio' 
-                                            name='editRadioButton'
-                                            onChange={() => editOnChange(id)}
-                                            value={id}
-                                        /> : null
+                                        <span className='editRadioButtonSpan'>
+                                            <input 
+                                                className='editRadioButton'
+                                                type='radio' 
+                                                name='editRadioButton'
+                                                onChange={() => editOnChange(id)}
+                                                value={id}
+                                            />
+                                        </span> : null
                                     }  
                                     {/* <li className='quoteAndAuthor'>{index+1}. {quote} ~{author}</li> */}
                                     <Card style={{ width: '24rem' }}>
