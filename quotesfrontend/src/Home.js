@@ -30,8 +30,8 @@ const Quotes = () => {
         getQuotes();
     }, [ showAddModal, showDeleteModal, showEditModal, selectedTag ]);
     
-    // mapping random image to quote id
     useEffect(() => {
+        // map quote ids to background images on page load
         if (Object.keys(mapped).length === 0) {
             if (quotes.length > 0) {
                 let quoteToImgMap = {};
@@ -51,6 +51,12 @@ const Quotes = () => {
                 }
                 setMapped(quoteToImgMap);
             }
+        }
+        // if the last quote id is not mapped (ex. new quote created), assign img in map
+        if (Object.keys(mapped).length > 0 
+            && !mapped.hasOwnProperty(quotes[quotes.length - 1].id)) {
+                let newIdx = Math.floor(Math.random() * imgSrc.length);
+                setMapped({...mapped, ...{ [quotes[quotes.length - 1].id]: newIdx }});
         }
     }, [quotes, mapped]);
 
@@ -74,7 +80,6 @@ const Quotes = () => {
             setEditRadio(new Array(quotes.length).fill(false));
         }
     }, [toggleEdit, quotes.length]);
-
 
     const getQuotes = () => {
         if (selectedTag === '' || selectedTag === "all") {
