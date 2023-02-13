@@ -173,75 +173,81 @@ const Quotes = () => {
             <h1>Hey, You're Awesome</h1>
             <Row>
                 <Col sm={2}>
-                    <div>
-                        <h3>Categories</h3>
+                    <h3>Categories</h3>
+                    <div className='tagCategories'>
                         {tags.map(tag =>
-                            <div key={tag}>
-                                <button 
-                                    className='tagName' 
-                                    onClick={() => {
-                                        setSelectedTag(tag);
-                                    }}
-                                >
-                                    {tag}
-                                </button>   
-                            </div>)
+                            <span >
+                                <div key={tag}>
+                                    <button 
+                                        className='tagName' 
+                                        onClick={() => {
+                                            setSelectedTag(tag);
+                                        }}
+                                    >
+                                        {tag}
+                                    </button>   
+                                </div>
+                            </span>)
                         }                        
                     </div>
                     <Row>
-                        <div>
-                            <button className='newQuoteButton' 
-                                onClick={() => {
-                                    setShowAddModal(!showAddModal)
-                                }}>
-                                Add Quote
-                            </button>
-                        </div>
-                    </Row>
-                    <Row>
-                        <div>
-                            <button className='toggleEditButton'
-                                onClick={() => handleToggleEdit()}> 
-                                Edit Quote
-                            </button>
-                        </div>
-                    </Row>
-                    <Row>
-                        <div>
-                            <button className='deleteMultipleButton' 
-                                onClick={() => {
-                                    if (toggleEdit) setToggleEdit(false);
-                                    setDeleteMultiple(!deleteMultiple);
-                                }}>
-                                Delete Quote(s)
-                            </button>
-                        </div>
-                    </Row>
-                    <Row>
-                        <Dropdown 
-                            direction="down" 
-                            isOpen={dropdownOpen} 
-                            toggle={() => setDropdownOpen(!dropdownOpen)} >
-                            <DropdownToggle 
-                                caret 
-                                className='sortDropdownText'>
-                                    {sort === '' ? 'Sort' : `Sort by: ${sort}`}
-                            </DropdownToggle>
-                            <DropdownMenu name="sortType">
-                                <DropdownItem 
-                                    name="NameDesc" 
-                                    value="Name ↓" 
-                                    onClick={e => handleDropdownChange(e)}>
-                                        Name ↓
-                                </DropdownItem>
-                                <DropdownItem 
-                                    name="NameAsc" 
-                                    value="Name ↑" 
-                                    onClick={e => handleDropdownChange(e)}>
-                                        Name ↑
-                                </DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
+                        <Row>
+                            <div>
+                                <button className='newQuoteButton' 
+                                    onClick={() => {
+                                        setShowAddModal(!showAddModal)
+                                    }}>
+                                    Add Quote
+                                </button>
+                            </div>
+                        </Row>
+                        <Row>
+                            <div>
+                                <button className='toggleEditButton'
+                                    onClick={() => handleToggleEdit()}> 
+                                    Edit Quote
+                                </button>
+                            </div>
+                        </Row>
+                        <Row>
+                            <div>
+                                <button className='deleteMultipleButton' 
+                                    onClick={() => {
+                                        if (toggleEdit) setToggleEdit(false);
+                                        setDeleteMultiple(!deleteMultiple);
+                                    }}>
+                                    Delete Quote(s)
+                                </button>
+                            </div>
+                        </Row>
+                        <Row>
+                            <div>
+                                <Dropdown className='sortDropdown'
+                                    direction="down" 
+                                    isOpen={dropdownOpen} 
+                                    toggle={() => setDropdownOpen(!dropdownOpen)} >
+                                    <DropdownToggle 
+                                        caret 
+                                        className='sortDropdownText'>
+                                            {sort === '' ? 'Sort' : `Sort by: ${sort}`}
+                                    </DropdownToggle>
+                                    <DropdownMenu name="sortType">
+                                        <DropdownItem 
+                                            name="NameDesc" 
+                                            value="Name ↓" 
+                                            onClick={e => handleDropdownChange(e)}>
+                                                Name ↓
+                                        </DropdownItem>
+                                        <DropdownItem 
+                                            name="NameAsc" 
+                                            value="Name ↑" 
+                                            onClick={e => handleDropdownChange(e)}>
+                                                Name ↑
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </div>
+                        </Row>
                     </Row>
                 </Col>
                 <Col sm={10}>  

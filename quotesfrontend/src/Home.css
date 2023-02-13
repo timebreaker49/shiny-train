@@ -4,13 +4,14 @@
 }
 .newQuoteButton {
     display: initial;
+    float: left;
     padding: 6px 13px;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 5px;
     border: none;
     margin-top: 1em;
-    margin-left: 4%;
+    margin-left: 15%;
     outline: none;
     background: #724CF9;
     color: white;
@@ -18,13 +19,14 @@
 }
 .deleteMultipleButton {
     display: initial;
+    float: left;
     padding: 6px 13px;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 5px;
     border: none;
     margin-top: 1em;
-    margin-left: 4%;
+    margin-left: 15%;
     outline: none;
     background: #7a7978;
     color: white;
@@ -32,13 +34,14 @@
 }
 .toggleEditButton {
     display: initial;
+    float: left;
     padding: 6px 13px;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 5px;
     border: none;
     margin-top: 1em;
-    margin-left: 4%;
+    margin-left: 15%;
     outline: none;
     background: seagreen;
     color: white;
@@ -96,11 +99,17 @@
     list-style: none;
     margin-left: 1%;
 }
-.dropdown {
+.sortDropdown {
+    display: initial;
+    float: left;
     margin-top: 1em;
-    margin-left: 4%;
-    padding: 6px 13px;
+    margin-left: 15%;
 }
 .sortDropdownText {
     font-weight: bold;
+}
+.tagCategories {
+    margin-left: 5px;
+    padding: 0 15%;
+    text-align: left;
 }
