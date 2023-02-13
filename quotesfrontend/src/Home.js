@@ -117,6 +117,14 @@ const Quotes = () => {
         authorList.sort((a,b) => a.localeCompare(b));
         setAuthors(authorList);
     }
+
+    const getQuotesByAuthor = name => {
+        axios.post(`filter-by-author/${name}/`)
+        .then(res => {
+            setQuotes(res.data);
+        })
+        .catch(err => err.response.data);
+    }
     
     const getTags =  () => {
         axios.get('api/tags')
@@ -212,6 +220,9 @@ const Quotes = () => {
                                     <div>
                                         <button
                                             className='authorName'
+                                            onClick={() => {
+                                                getQuotesByAuthor(author);
+                                            }}
                                         >
                                             {author}
                                         </button>
