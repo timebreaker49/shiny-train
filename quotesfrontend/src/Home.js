@@ -11,6 +11,7 @@ import './Home.css';
 const Quotes = () => {
     const [tags, setTags] = useState([]);
     const [quotes, setQuotes] = useState([]);
+    const [authors, setAuthors] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -93,6 +94,7 @@ const Quotes = () => {
         axios.get('api/quotes')
         .then(res => {
             setQuotes(res.data);
+            getAuthors(res.data);
         })
         .catch(err => console.log(err.response.data));
     }
@@ -104,6 +106,16 @@ const Quotes = () => {
             setQuotes(res.data);
         })
         .catch(err => (err.response.data));
+    }
+
+    const getAuthors = quotes => {
+        let uniqueAuthors = new Set();
+        for (let quote in quotes) {
+            uniqueAuthors.add(quotes[quote].author);
+        }
+        let authorList = [...uniqueAuthors];
+        authorList.sort((a,b) => a.localeCompare(b));
+        setAuthors(authorList);
     }
     
     const getTags =  () => {
@@ -173,23 +185,41 @@ const Quotes = () => {
             <h1>Hey, You're Awesome</h1>
             <Row>
                 <Col sm={2}>
-                    <h3>Categories</h3>
-                    <div className='tagCategories'>
-                        {tags.map(tag =>
-                            <span >
-                                <div key={tag}>
-                                    <button 
-                                        className='tagName' 
-                                        onClick={() => {
-                                            setSelectedTag(tag);
-                                        }}
-                                    >
-                                        {tag}
-                                    </button>   
-                                </div>
-                            </span>)
-                        }                        
-                    </div>
+                    <Row>
+                        <h3>Categories</h3>
+                        <div className='tagContainer'>
+                            {tags.map(tag =>
+                                <span key={tag}>
+                                    <div>
+                                        <button 
+                                            className='tagName' 
+                                            onClick={() => {
+                                                setSelectedTag(tag);
+                                            }}
+                                        >
+                                            {tag}
+                                        </button>   
+                                    </div>
+                                </span>)
+                            }                        
+                        </div>
+                    </Row>
+                    <Row>
+                        <h3>Authors</h3>
+                        <div className='authorContainer'>
+                            {authors.map(author => 
+                                <span key={author}>
+                                    <div>
+                                        <button
+                                            className='authorName'
+                                        >
+                                            {author}
+                                        </button>
+                                    </div>
+                                </span>)
+                            }
+                        </div>
+                    </Row>
                     <Row>
                         <Row>
                             <div>

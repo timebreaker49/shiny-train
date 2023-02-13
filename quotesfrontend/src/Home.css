@@ -84,7 +84,7 @@
     color: white;
     cursor: pointer;
 }
-.tagName {
+.tagName, .authorName {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -92,6 +92,7 @@
     display: inline;
     margin: 0;
     padding: 0;
+    text-align: left;
 }
 .quoteAndAuthor {
     display: flex;
@@ -108,8 +109,8 @@
 .sortDropdownText {
     font-weight: bold;
 }
-.tagCategories {
+.tagContainer, .authorContainer {
+    text-align: left;
     margin-left: 5px;
     padding: 0 15%;
-    text-align: left;
 }
