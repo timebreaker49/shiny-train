@@ -49,6 +49,13 @@ class QuoteViewSet(viewsets.ModelViewSet):
         serializer = QuoteSerializer(quotes, many=True)
         return Response(serializer.data, status=200)
 
+    @api_view(['POST'])
+    @csrf_exempt
+    def filter_by_author(request, **kwargs):
+        queryset = Quote.objects.filter(author=kwargs['author'])
+        serializer = QuoteSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
     @api_view(['DELETE'])
     @csrf_exempt
     def bulk_delete(request):
