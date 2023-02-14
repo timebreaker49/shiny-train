@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
+import { useWindowSize } from './Hooks/UseWindowSize';
 import axios from 'axios';
 import AddQuoteModal from './AddQuoteModal';
 import DeleteQuoteModal from './DeleteQuoteModal';
@@ -25,7 +26,8 @@ const Quotes = () => {
     const [mapped, setMapped] = useState({});
     const [sort, setSort] = useState('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    
+    const size = useWindowSize();
+
     useEffect(() => {
         getTags()
         getQuotes();
@@ -186,51 +188,13 @@ const Quotes = () => {
         }
         setQuotes(sortedQuotes);
     }
-    
 
     return (
         <div className='App'>
             <h1>Hey, You're Awesome</h1>
             <Row>
                 <Col sm={2}>
-                    <Row>
-                        <h3>Categories</h3>
-                        <div className='tagContainer'>
-                            {tags.map(tag =>
-                                <span key={tag}>
-                                    <div>
-                                        <button 
-                                            className='tagName' 
-                                            onClick={() => {
-                                                setSelectedTag(tag);
-                                            }}
-                                        >
-                                            {tag}
-                                        </button>   
-                                    </div>
-                                </span>)
-                            }                        
-                        </div>
-                    </Row>
-                    <Row>
-                        <h3>Authors</h3>
-                        <div className='authorContainer'>
-                            {authors.map(author => 
-                                <span key={author}>
-                                    <div>
-                                        <button
-                                            className='authorName'
-                                            onClick={() => {
-                                                getQuotesByAuthor(author);
-                                            }}
-                                        >
-                                            {author}
-                                        </button>
-                                    </div>
-                                </span>)
-                            }
-                        </div>
-                    </Row>
+                    <div style={{maxHeight: size.height * 0.8, overflowY: 'scroll'}}>
                     <Row>
                         <Row>
                             <div>
@@ -290,8 +254,86 @@ const Quotes = () => {
                             </div>
                         </Row>
                     </Row>
+                    <Row>
+                        <h3>Categories</h3>
+                        <div className='tagContainer'>
+                            {tags.map(tag =>
+                                <span key={tag}>
+                                    <div>
+                                        <button 
+                                            className='tagName' 
+                                            onClick={() => {
+                                                setSelectedTag(tag);
+                                            }}
+                                        >
+                                            {tag}
+                                        </button>   
+                                    </div>
+                                </span>)
+                            }                        
+                        </div>
+                    </Row>
+                    <Row>
+                        <h3>Authors</h3>
+                        <div className='authorContainer'>
+                            {authors.map(author => 
+                                <span key={author}>
+                                    <div>
+                                        <button
+                                            className='authorName'
+                                            onClick={() => {
+                                                getQuotesByAuthor(author);
+                                            }}
+                                        >
+                                            {author}
+                                        </button>
+                                    </div>
+                                </span>)
+                            }
+                        </div>
+                    </Row>
+                    </div>
                 </Col>
-                <Col sm={10}>  
+                <Col sm={10}>
+                    <div className='quoteSection' style={{maxHeight: size.height * 0.80}}>
+                        <Row>
+                            {quotes.map(({id, author, quote, tags}, index) => 
+                                <Col xs={6} lg={4} key={id} id='quoteRow'>
+                                    <span className='checkAndQuote'>
+                                        {deleteMultiple ? 
+                                            <span className='deleteCheckboxSpan'>
+                                                <input 
+                                                    className='deleteCheckbox'
+                                                    type='checkbox' 
+                                                    onChange={() => handleOnChange(index)}
+                                                    value={id}
+                                                    checked={checkedState[index] ?? []} 
+                                                />
+                                            </span> : null
+                                        }
+                                        {toggleEdit ? 
+                                            <span className='editRadioButtonSpan'>
+                                                <input 
+                                                    className='editRadioButton'
+                                                    type='radio' 
+                                                    name='editRadioButton'
+                                                    onChange={() => editOnChange(id)}
+                                                    value={id}
+                                                />
+                                            </span> : null
+                                        }  
+                                        <Card style={{ width: '24rem' }}>
+                                            <Card.Img variant="top" src={imgSrc[mapped[id]]} />
+                                            <Card.Body>
+                                                <Card.Title>{index+1}. "{quote}"</Card.Title>
+                                                <Card.Text>~ {author}</Card.Text>
+                                            </Card.Body>
+                                        </Card>
+                                    </span>
+                                </Col>                                                     
+                            )}
+                        </Row> 
+                    </div>
                     {deleteMultiple ? 
                         <Row>
                             <div>
@@ -322,44 +364,6 @@ const Quotes = () => {
                         </Row>
                         : null
                     }
-                    <Row>
-                        {quotes.map(({id, author, quote, tags}, index) => 
-                            <Col xs={6} lg={4} key={id} id='quoteRow'>
-                                <span className='checkAndQuote'>
-                                    {deleteMultiple ? 
-                                        <span className='deleteCheckboxSpan'>
-                                            <input 
-                                                className='deleteCheckbox'
-                                                type='checkbox' 
-                                                onChange={() => handleOnChange(index)}
-                                                value={id}
-                                                checked={checkedState[index] ?? []} 
-                                            />
-                                        </span> : null
-                                    }
-                                    {toggleEdit ? 
-                                        <span className='editRadioButtonSpan'>
-                                            <input 
-                                                className='editRadioButton'
-                                                type='radio' 
-                                                name='editRadioButton'
-                                                onChange={() => editOnChange(id)}
-                                                value={id}
-                                            />
-                                        </span> : null
-                                    }  
-                                    {/* <li className='quoteAndAuthor'>{index+1}. {quote} ~{author}</li> */}
-                                    <Card style={{ width: '24rem' }}>
-                                        <Card.Img variant="top" src={imgSrc[mapped[id]]} />
-                                        <Card.Body>
-                                            <Card.Title>{index+1}. "{quote}"</Card.Title>
-                                            <Card.Text>~ {author}</Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </span>
-                            </Col>                                                     
-                        )}
-                    </Row>
                 </Col>
             </Row>
             {showDeleteModal ? 
