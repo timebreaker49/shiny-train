@@ -191,10 +191,9 @@ const Quotes = () => {
 
     return (
         <div className='App'>
-            <h1>Hey, You're Awesome</h1>
             <Row>
                 <Col sm={2}>
-                    <div style={{maxHeight: size.height * 0.8, overflowY: 'scroll'}}>
+                    <div style={{maxHeight: size.height * 0.9, overflowY: 'scroll',marginTop: '2%'}}>
                     <Row>
                         <Row>
                             <div>
@@ -295,7 +294,7 @@ const Quotes = () => {
                     </div>
                 </Col>
                 <Col sm={10}>
-                    <div className='quoteSection' style={{maxHeight: size.height * 0.80}}>
+                    <div className='quoteSection' style={{maxHeight: size.height * 0.90}}>
                         <Row>
                             {quotes.map(({id, author, quote, tags}, index) => 
                                 <Col xs={6} lg={4} key={id} id='quoteRow'>

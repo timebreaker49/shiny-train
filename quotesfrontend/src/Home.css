@@ -103,7 +103,7 @@
 .sortDropdown {
     display: initial;
     float: left;
-    margin-top: 1em;
+    margin: 1em 0;
     margin-left: 15%;
 }
 .sortDropdownText {
@@ -115,5 +115,6 @@
     padding: 0 15%;
 }
 .quoteSection {
+    margin-top: 2%;
     overflow-y: scroll;
 }
