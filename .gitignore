@@ -3,6 +3,8 @@
 *.pot
 *.pyc
 __pycache__/
+quotes/__pycache__/
+quotesdjango/__pycache__/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -317,3 +319,6 @@ node_modules
 psd
 thumb
 sketch
+
+## sqlite
+db.sqlite3
