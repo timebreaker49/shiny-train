@@ -319,6 +319,3 @@ node_modules
 psd
 thumb
 sketch
-
-## sqlite
-db.sqlite3
