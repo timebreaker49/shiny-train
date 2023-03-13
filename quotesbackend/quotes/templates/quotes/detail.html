@@ -1,0 +1,6 @@
+<h1>{{category}}</h1>
+<ul>
+{% for quote in category.quotes.all %}
+    <li>{{quote}}, {{quote.author}}</li>
+{% endfor %}
+</ul>

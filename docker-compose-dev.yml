@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  nginx:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - static_volume:/app/quotesbackend/django_static
+      - ./docker/nginx/development:/etc/nginx/conf.d
+    depends_on:
+      - quotesbackend
+    image: quotes:nginx
+  quotesbackend:
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./docker/quotesbackend/Dockerfile
+    entrypoint: /app/docker/quotesbackend/wsgi-entrypoint.sh
+    volumes:
+      - .:/app
+      - static_volume:/app/quotesbackend/django_static
+    expose:
+      - 8000
+    image: quotes:quotesbackend
+
+volumes:
+  static_volume: {}

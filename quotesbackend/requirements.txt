@@ -1,0 +1,6 @@
+django==3.2
+django-cors-headers 
+django-taggit 
+djangorestframework ==3.13.1
+beautifulsoup4 
+requests
