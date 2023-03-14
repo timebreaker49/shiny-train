@@ -297,7 +297,7 @@ const Quotes = () => {
                     <div className='quoteSection' style={{maxHeight: size.height * 0.90}}>
                         <Row>
                             {quotes.map(({id, author, quote, tags}, index) => 
-                                <Col xs={6} lg={4} key={id} id='quoteRow'>
+                                <Col xs={12} md={6} lg={4} key={id} id='quoteRow'>
                                     <span className='checkAndQuote'>
                                         {deleteMultiple ? 
                                             <span className='deleteCheckboxSpan'>
