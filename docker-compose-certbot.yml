@@ -3,7 +3,7 @@ services:
   letsencrypt:
     container_name: 'certbot-service'
     image: certbot/certbot
-    command: sh -c "certbot certonly --webroot -w /tmp/acme_challenge -d somerandomquotes.com --text --agree-tos --email example@gmail.com --rsa-key-size 4096 --verbose --$
+    command: sh -c "certbot certonly --webroot -w /tmp/acme_challenge -d somerandomquotes.com --text --agree-tos --email example@gmail.com --rsa-key-size 4096 --verbose --keep-until-expiring --preferred-challenges=http"
     entrypoint: ""
     volumes:
       - "/etc/letsencrypt:/etc/letsencrypt"
