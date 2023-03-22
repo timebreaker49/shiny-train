@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     'api', 
     '0.0.0.0',
     '127.0.0.1',
+    'somerandomquotes.com',
 ]
 
 CORS_ORIGIN_WHITELIST = [
