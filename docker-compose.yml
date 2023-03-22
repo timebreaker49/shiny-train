@@ -10,21 +10,14 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - static_volume:/app/backend/django_static
+      - static_volume:/app/quotesbackend/django_static
       - ./docker/nginx/production:/etc/nginx/conf.d
-      - ./docker/nginx/certbot/conf:/etc/letsencrypt
-      - ./docker/nginx/certbot/www:/var/www/certbot
+      - /etc/letsencrypt:/etc/letsencrypt
+      - /tmp/acme_challenge:/tmp/acme_challenge
     depends_on:
-      - backend
+      - quotesbackend
     image: quotes:nginx
-  certbot:
-    image: certbot/certbot
-    restart: unless-stopped
-    volumes:
-      - ./docker/nginx/cerrtbot/conf:/etc/letsencrypt
-      - ./docker/nginx/certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-  backend:
+  quotesbackend:
     restart: unless-stopped
     build:
       context: .
