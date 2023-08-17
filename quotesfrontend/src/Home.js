@@ -173,6 +173,11 @@ const Quotes = () => {
         }
     }
 
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const handleSidebarClick = () => {
+        setSidebarOpen(!sidebarOpen);
+    }
+
     const handleDropdownChange = e => {
         setSort(e.target.value);
         const sortedQuotes = quotes;
@@ -191,7 +196,11 @@ const Quotes = () => {
 
     return (
         <div className='App'>
+            {size.width <  767 
+                ? <Sidebar authors={authors} tags={tags} toggleSidebar={handleSidebarClick} isOpen={sidebarOpen} /> 
+                : null }
             <Row>
+            {size.width > 767 ?
                 <Col sm={2}>
                     <div style={{maxHeight: size.height * 0.9, overflowY: 'scroll',marginTop: '2%'}}>
                     <Row>
@@ -292,8 +301,8 @@ const Quotes = () => {
                         </div>
                     </Row>
                     </div>
-                </Col>
-                <Col sm={10}>
+                </Col> : null}
+                <Col sm={10} xs={12}>
                     <div className='quoteSection' style={{maxHeight: size.height * 0.90}}>
                         <Row>
                             {quotes.map(({id, author, quote, tags}, index) => 
