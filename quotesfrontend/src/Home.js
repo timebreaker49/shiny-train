@@ -5,6 +5,7 @@ import axios from 'axios';
 import AddQuoteModal from './AddQuoteModal';
 import DeleteQuoteModal from './DeleteQuoteModal';
 import EditQuoteModal from './EditQuoteModal';
+import Sidebar from './Sidebar';
 import Card from 'react-bootstrap/Card';
 import imgSrc from './ImageSrcs';
 import './Home.css';
@@ -12,6 +13,8 @@ import './Home.css';
 const Quotes = () => {
     const [tags, setTags] = useState([]);
     const [quotes, setQuotes] = useState([]);
+    const [mapped, setMapped] = useState({});
+    const size = useWindowSize();
     const [authors, setAuthors] = useState([]);
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -23,10 +26,8 @@ const Quotes = () => {
     const [toBeDeleted, setToBeDeleted] = useState([]);
     const [toggleEdit, setToggleEdit] = useState(false);
     const [editRadio, setEditRadio] = useState([]);
-    const [mapped, setMapped] = useState({});
     const [sort, setSort] = useState('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    const size = useWindowSize();
 
     useEffect(() => {
         getTags()
@@ -104,7 +105,6 @@ const Quotes = () => {
     const getQuotesByTag = (name) => {
         axios.post('tagged/', {tags: [name]})
         .then(res => {
-            console.log(JSON.stringify(res.data));
             setQuotes(res.data);
         })
         .catch(err => (err.response.data));
@@ -178,6 +178,11 @@ const Quotes = () => {
         setSidebarOpen(!sidebarOpen);
     }
 
+    const handleToggleDelete = () => {
+        if (toggleEdit) setToggleEdit(false);
+        setDeleteMultiple(!deleteMultiple);
+    }
+
     const handleDropdownChange = e => {
         setSort(e.target.value);
         const sortedQuotes = quotes;
@@ -194,114 +199,35 @@ const Quotes = () => {
         setQuotes(sortedQuotes);
     }
 
+    const handleAddQuoteButtonClick = () => {
+        setShowAddModal(!showAddModal);
+    }
+
     return (
         <div className='App'>
+            {/* <Sidebar />
             {size.width <  767 
-                ? <Sidebar authors={authors} tags={tags} toggleSidebar={handleSidebarClick} isOpen={sidebarOpen} /> 
-                : null }
+                ? 
+                : null } */}
             <Row>
             {size.width > 767 ?
                 <Col sm={2}>
-                    <div style={{maxHeight: size.height * 0.9, overflowY: 'scroll',marginTop: '2%'}}>
-                    <Row>
-                        <Row>
-                            <div>
-                                <button className='newQuoteButton' 
-                                    onClick={() => {
-                                        setShowAddModal(!showAddModal)
-                                    }}>
-                                    Add Quote
-                                </button>
-                            </div>
-                        </Row>
-                        <Row>
-                            <div>
-                                <button className='toggleEditButton'
-                                    onClick={() => handleToggleEdit()}> 
-                                    Edit Quote
-                                </button>
-                            </div>
-                        </Row>
-                        <Row>
-                            <div>
-                                <button className='deleteMultipleButton' 
-                                    onClick={() => {
-                                        if (toggleEdit) setToggleEdit(false);
-                                        setDeleteMultiple(!deleteMultiple);
-                                    }}>
-                                    Delete Quote(s)
-                                </button>
-                            </div>
-                        </Row>
-                        <Row>
-                            <div>
-                                <Dropdown className='sortDropdown'
-                                    direction="down" 
-                                    isOpen={dropdownOpen} 
-                                    toggle={() => setDropdownOpen(!dropdownOpen)} >
-                                    <DropdownToggle 
-                                        caret 
-                                        className='sortDropdownText'>
-                                            {sort === '' ? 'Sort' : `Sort by: ${sort}`}
-                                    </DropdownToggle>
-                                    <DropdownMenu name="sortType">
-                                        <DropdownItem 
-                                            name="NameDesc" 
-                                            value="Name ↓" 
-                                            onClick={e => handleDropdownChange(e)}>
-                                                Name ↓
-                                        </DropdownItem>
-                                        <DropdownItem 
-                                            name="NameAsc" 
-                                            value="Name ↑" 
-                                            onClick={e => handleDropdownChange(e)}>
-                                                Name ↑
-                                        </DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </div>
-                        </Row>
-                    </Row>
-                    <Row>
-                        <h3>Categories</h3>
-                        <div className='tagContainer'>
-                            {tags.map(tag =>
-                                <span key={tag}>
-                                    <div>
-                                        <button 
-                                            className='tagName' 
-                                            onClick={() => {
-                                                setSelectedTag(tag);
-                                            }}
-                                        >
-                                            {tag}
-                                        </button>   
-                                    </div>
-                                </span>)
-                            }                        
-                        </div>
-                    </Row>
-                    <Row>
-                        <h3>Authors</h3>
-                        <div className='authorContainer'>
-                            {authors.map(author => 
-                                <span key={author}>
-                                    <div>
-                                        <button
-                                            className='authorName'
-                                            onClick={() => {
-                                                getQuotesByAuthor(author);
-                                            }}
-                                        >
-                                            {author}
-                                        </button>
-                                    </div>
-                                </span>)
-                            }
-                        </div>
-                    </Row>
-                    </div>
-                </Col> : null}
+                    <Sidebar
+                        authors={authors}
+                        dropdownOpen={dropdownOpen} 
+                        handleAddClick={handleAddQuoteButtonClick}
+                        handleDropdownChange={e => handleDropdownChange(e)}
+                        isOpen={sidebarOpen}
+                        setAuthor={author => getQuotesByAuthor(author)}
+                        setTag={tag => setSelectedTag(tag)} 
+                        sortBy={sort}
+                        tags={tags}
+                        toggleDelete={handleToggleDelete}
+                        toggleEdit={handleToggleEdit}                    
+                        toggleSidebar={handleSidebarClick}
+                        toggleSort={() => setDropdownOpen(!dropdownOpen)}
+                    /> 
+                </Col> 
                 <Col sm={10} xs={12}>
                     <div className='quoteSection' style={{maxHeight: size.height * 0.90}}>
                         <Row>

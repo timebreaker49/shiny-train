@@ -5,10 +5,29 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useWindowSize } from './Hooks/UseWindowSize';
 
 const Sidebar = ({ isOpen, toggleSidebar, tags, authors, handleAddClick }) => {
 
+const Sidebar = ({ 
+    authors,
+    dropdownOpen,
+    handleAddClick,
+    handleDropdownChange,
+    isOpen,
+    setAuthor,
+    setTag,
+    sortBy,
+    toggleDelete,
+    toggleEdit,
+    toggleSidebar,
+    toggleSort,
+    tags
+}) => {
+
+    const windowSize = useWindowSize();
     const sidebarClass = isOpen ? "sidebar open" : "sidebar";
+
     return(
         <Col sm={8}>
             <Button onClick={toggleSidebar} className='sidebar-toggle'>
