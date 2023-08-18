@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { useWindowSize } from './Hooks/UseWindowSize';
 import axios from 'axios';
 import AddQuoteModal from './AddQuoteModal';
@@ -16,6 +16,7 @@ const Quotes = () => {
     const [mapped, setMapped] = useState({});
     const size = useWindowSize();
     const [authors, setAuthors] = useState([]);
+    // hooks delegated to Sidebar component
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
@@ -205,30 +206,8 @@ const Quotes = () => {
 
     return (
         <div className='App'>
-            {/* <Sidebar />
-            {size.width <  767 
-                ? 
-                : null } */}
             <Row>
-            {size.width > 767 ?
-                <Col sm={2}>
-                    <Sidebar
-                        authors={authors}
-                        dropdownOpen={dropdownOpen} 
-                        handleAddClick={handleAddQuoteButtonClick}
-                        handleDropdownChange={e => handleDropdownChange(e)}
-                        isOpen={sidebarOpen}
-                        setAuthor={author => getQuotesByAuthor(author)}
-                        setTag={tag => setSelectedTag(tag)} 
-                        sortBy={sort}
-                        tags={tags}
-                        toggleDelete={handleToggleDelete}
-                        toggleEdit={handleToggleEdit}                    
-                        toggleSidebar={handleSidebarClick}
-                        toggleSort={() => setDropdownOpen(!dropdownOpen)}
-                    /> 
-                </Col> 
-                <Col sm={10} xs={12}>
+                <Col lg={10} md={9} sm={8} xs={11}>
                     <div className='quoteSection' style={{maxHeight: size.height * 0.90}}>
                         <Row>
                             {quotes.map(({id, author, quote, tags}, index) => 
@@ -256,7 +235,12 @@ const Quotes = () => {
                                                 />
                                             </span> : null
                                         }  
-                                        <Card style={{ width: '24rem' }}>
+                                        <Card 
+                                            style={{ 
+                                                width: '24rem',
+                                                display: 'block',
+ 
+                                            }}>
                                             <Card.Img variant="top" src={imgSrc[mapped[id]]} />
                                             <Card.Body>
                                                 <Card.Title>{index+1}. "{quote}"</Card.Title>
@@ -299,6 +283,23 @@ const Quotes = () => {
                         : null
                     }
                 </Col>
+                <Col lg={2} md={3} sm={4} xs={1}>
+                    <Sidebar
+                        authors={authors}
+                        dropdownOpen={dropdownOpen} 
+                        handleAddClick={handleAddQuoteButtonClick}
+                        handleDropdownChange={e => handleDropdownChange(e)}
+                        isOpen={sidebarOpen}
+                        setAuthor={author => getQuotesByAuthor(author)}
+                        setTag={tag => setSelectedTag(tag)} 
+                        sortBy={sort}
+                        tags={tags}
+                        toggleDelete={handleToggleDelete}
+                        toggleEdit={handleToggleEdit}                    
+                        toggleSidebar={handleSidebarClick}
+                        toggleSort={() => setDropdownOpen(!dropdownOpen)}
+                    /> 
+                </Col> 
             </Row>
             {showDeleteModal ? 
                 <DeleteQuoteModal 
