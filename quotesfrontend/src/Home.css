@@ -2,51 +2,6 @@
     text-align: left;
     padding-bottom: 1em;
 }
-.newQuoteButton {
-    display: initial;
-    float: left;
-    padding: 6px 13px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    margin-top: 1em;
-    margin-left: 15%;
-    outline: none;
-    background: #724CF9;
-    color: white;
-    cursor: pointer;
-}
-.deleteMultipleButton {
-    display: initial;
-    float: left;
-    padding: 6px 13px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    margin-top: 1em;
-    margin-left: 15%;
-    outline: none;
-    background: #7a7978;
-    color: white;
-    cursor: pointer;
-}
-.toggleEditButton {
-    display: initial;
-    float: left;
-    padding: 6px 13px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    border: none;
-    margin-top: 1em;
-    margin-left: 15%;
-    outline: none;
-    background: seagreen;
-    color: white;
-    cursor: pointer;
-}
 .editButton {
     background: seagreen;
     display: flex;
@@ -103,17 +58,12 @@
 .sortDropdown {
     display: initial;
     float: left;
-    margin: 1em 0;
-    margin-left: 15%;
+    margin: 1em 15% 1em 0;
 }
 .sortDropdownText {
     font-weight: bold;
 }
-.tagContainer, .authorContainer {
-    text-align: left;
-    margin-left: 5px;
-    padding: 0 15%;
-}
+
 .quoteSection {
     margin-top: 2%;
     overflow-y: scroll;

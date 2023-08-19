@@ -1,12 +1,10 @@
-import React, { useEffect } from 'react';
-import { Button, Col, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import './Sidebar.css';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useWindowSize } from './Hooks/UseWindowSize';
-
 
 const Sidebar = ({ 
     authors,
@@ -52,10 +50,10 @@ const Sidebar = ({
                         <RemoveIcon />
                     </Button>
 
-                    <div className={sidebarClass} style={{overflowY: 'scroll'}}>
+                    <div className={sidebarClass} style={{overflowY: 'scroll', paddingTop: '5px'}}>
                         <Row>
                             <h3>Categories</h3>
-                            <div className='tagContainer'>
+                            <div className='toggledSidebarTagContainer'>
                                 {tags.map(tag =>
                                     <span key={tag}>
                                         <div>
@@ -75,7 +73,7 @@ const Sidebar = ({
                         </Row>
                         <Row>
                             <h3>Authors</h3>
-                            <div className='authorContainer'>
+                            <div className='toggledSidebarAuthorContainer'>
                                 {authors.map(author => 
                                     <span key={author}>
                                         <div>
@@ -101,7 +99,7 @@ const Sidebar = ({
                         marginTop: '2%'}}> 
                     <Row>
                         <div>
-                            <button className='newQuoteButton' 
+                            <button className='buttonBase newQuoteButton' 
                                 onClick={handleAddClick}>
                                 Add Quote
                             </button>
@@ -109,7 +107,7 @@ const Sidebar = ({
                     </Row>
                     <Row>
                         <div>
-                            <button className='toggleEditButton'
+                            <button className='buttonBase toggleEditButton'
                                 onClick={toggleEdit}> 
                                 Edit Quote
                             </button>
@@ -117,7 +115,7 @@ const Sidebar = ({
                     </Row>
                     <Row>
                         <div>
-                            <button className='deleteMultipleButton' 
+                            <button className='buttonBase deleteMultipleButton' 
                                 onClick={toggleDelete}>
                                 Delete Quote(s)
                             </button>
@@ -154,7 +152,7 @@ const Sidebar = ({
                     </Row>
                     <Row>
                         <h3>Categories</h3>
-                        <div className='tagContainer'>
+                        <div className='sidebarTagContainer'>
                             {tags.map(tag =>
                                 <span key={tag}>
                                     <div>
@@ -170,7 +168,7 @@ const Sidebar = ({
                     </Row>
                     <Row>
                         <h3>Authors</h3>
-                        <div className='authorContainer'>
+                        <div className='sidebarAuthorContainer'>
                             {authors.map(author => 
                                 <span key={author}>
                                     <div>

@@ -1,3 +1,25 @@
+.buttonBase {
+    display: initial;
+    float: left;
+    padding: 6px 13px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    margin-top: 1em;
+    margin-right: 15%;
+    outline: none;
+}
+.deleteMultipleButton {
+    background: #7a7978;
+    color: white;
+    cursor: pointer;
+}
+.newQuoteButton {
+    background: #724CF9;
+    color: white;
+    cursor: pointer;
+}
 .sidebar {
     position: absolute;
     left: -60vw;
@@ -9,16 +31,22 @@
     color: white;
     z-index: 1;
 }
-
-.sidebar-toggle {
-    position: absolute;
-    right: 5px;
-    width: 50px;
-    z-index: 1;
-}
-
 .sidebar.open {
     top: 0;
     left: 0;
     z-index: 1;
+}
+.sidebarAuthorContainer, .sidebarTagContainer {
+    text-align: left;
+    margin-right: 5px;
+}
+.toggleEditButton {
+    background: seagreen;
+    color: white;
+    cursor: pointer;
+}
+.toggledSidebarAuthorContainer, .toggledSidebarTagContainer {
+    text-align: left;
+    margin-right: 5px;
+    padding: 0 15%;
 }
