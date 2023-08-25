@@ -4,6 +4,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import RemoveIcon from '@mui/icons-material/Remove';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import { useWindowSize } from './Hooks/UseWindowSize';
 
 const Sidebar = ({ 
@@ -48,6 +50,22 @@ const Sidebar = ({
                         style={{position: 'absolute', right: '8px', top: '160px'}}
                         onClick={toggleDelete}>
                         <RemoveIcon />
+                    </Button>
+                    <Button
+                        style={{position: 'absolute', right: '8px', top: '210px'}}
+                        onClick={e => {
+                            e.target.value = 'Name ↑'
+                            handleDropdownChange(e);
+                        }}>
+                        <ArrowCircleUpIcon />
+                    </Button>
+                    <Button 
+                        style={{position: 'absolute', right: '8px', top: '260px'}}
+                        onClick={e => {
+                            e.target.value = 'Name ↓'
+                            handleDropdownChange(e);
+                        }}>
+                        <ArrowCircleDownIcon />
                     </Button>
 
                     <div className={sidebarClass} style={{overflowY: 'scroll', paddingTop: '5px'}}>
