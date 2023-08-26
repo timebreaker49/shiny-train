@@ -33,7 +33,7 @@ const Quotes = () => {
     useEffect(() => {
         getTags()
         getQuotes();
-    }, [ showAddModal, showDeleteModal, showEditModal, selectedTag ]);
+    }, [ showAddModal, showDeleteModal, showEditModal, selectedTag, selectedAuthor ]);
     
     useEffect(() => {
         // map quote ids to background images on page load
@@ -74,11 +74,11 @@ const Quotes = () => {
 
     useEffect(() => {
         if (deleteMultiple) {
-            if (checkedState.length === 0) {
+            if (checkedState.length === 0 || selectedTag) {
                 setCheckedState(new Array(quotes.length).fill(false));
             }
         }
-    },[ deleteMultiple, checkedState.length, quotes.length ]);
+    },[ deleteMultiple, checkedState.length, quotes.length, selectedTag ]);
 
     useEffect(() => {
         if (toggleEdit) {
@@ -87,6 +87,9 @@ const Quotes = () => {
     }, [toggleEdit, quotes.length]);
 
     const getQuotes = () => {
+        if (selectedAuthor !== '') {
+            getQuotesByAuthor(selectedAuthor);
+        } else 
         if (selectedTag === '' || selectedTag === "all") {
             getAllQuotes();
         } else {
@@ -103,7 +106,7 @@ const Quotes = () => {
         .catch(err => console.log(err.response.data));
     }
 
-    const getQuotesByTag = (name) => {
+    const getQuotesByTag = name => {
         axios.post('tagged/', {tags: [name]})
         .then(res => {
             setQuotes(res.data);
@@ -204,6 +207,17 @@ const Quotes = () => {
         setShowAddModal(!showAddModal);
     }
 
+    const handleAuthorClick = author => {
+        setSelectedQuote({id:'', quote: '', author: '', tags: []});
+        setSelectedAuthor(author);
+    }
+
+    const handleTagClick = tag => {
+        setSelectedAuthor('');
+        setSelectedQuote({id:'', quote: '', author: '', tags: []});
+        setSelectedTag(tag);
+    }
+
     return (
         <div className='App'>
             <Row>
@@ -290,8 +304,8 @@ const Quotes = () => {
                         handleAddClick={handleAddQuoteButtonClick}
                         handleDropdownChange={e => handleDropdownChange(e)}
                         isOpen={sidebarOpen}
-                        setAuthor={author => getQuotesByAuthor(author)}
-                        setTag={tag => setSelectedTag(tag)} 
+                        setAuthor={author => handleAuthorClick(author)}
+                        setTag={tag => handleTagClick(tag)} 
                         sortBy={sort}
                         tags={tags}
                         toggleDelete={handleToggleDelete}
