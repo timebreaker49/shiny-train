@@ -20,6 +20,7 @@ const Quotes = () => {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedAuthor, setSelectedAuthor] = useState('');
     const [selectedQuote, setSelectedQuote] = useState();
     const [selectedTag, setSelectedTag] = useState('');
     const [deleteMultiple, setDeleteMultiple] = useState(false); 
