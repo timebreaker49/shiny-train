@@ -269,7 +269,7 @@ const Quotes = () => {
                     </div>
                     {deleteMultiple ? 
                         <Row>
-                            <div>
+                            <div style={{'marginTop': '2px'}}>
                                 <button 
                                     className='deleteButton'
                                     onClick={() => {
@@ -283,7 +283,7 @@ const Quotes = () => {
                     }
                     {toggleEdit ?
                         <Row>
-                            <div>
+                            <div style={{'marginTop': '2px'}}>
                                 <button
                                     className='editButton'
                                     onClick={() => {
