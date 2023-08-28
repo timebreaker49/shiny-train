@@ -22,10 +22,10 @@
 }
 .sidebar {
     position: absolute;
-    left: -60vw;
+    left: -80vw;
     height: 100%;
     width: 60vw;
-    top: 0px;
+    top: 0;
     transition: left 0.3s ease-in-out;
     background-color: #724CF9;
     color: white;
